@@ -3,10 +3,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 
 import java.time.Duration;
@@ -50,10 +48,7 @@ public class TestWithoutAsserts {
 
 
 
-        WebElement actResult = driver.findElement(By.xpath("//span[contains(text(), 'Вы выбрали')]"));
-        String actualResult = actResult.getText();
-        String expectedResult = "Вы выбрали услугу: Регистрация брака";
-        Assertions.assertTrue(actualResult.contains(expectedResult),"Неверный выбор услуги");
+
 
         //3 step
         driver.findElement(By.id("TextInputField-7")).sendKeys("Ivan");
@@ -87,16 +82,15 @@ public class TestWithoutAsserts {
 
         // 5 step
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        By successSpan = By.xpath("//*[contains(text(), 'Ваша заявка')]");
 
-        wait.until(ExpectedConditions.not(
-                ExpectedConditions.textToBePresentInElementLocated(successSpan, "null")
-        ));
+        By successSpan = By.xpath("//*[contains(text(), 'Спасибо')]");
+        String expectedResult = "Спасибо за обращение!";
 
 
-        String finalReceiptText = driver.findElement(successSpan).getText();
-        System.out.println("ЛОГ: заявка успешно создана. Текст на экране: " + finalReceiptText);
+
+        String actualResult = driver.findElement(successSpan).getText();
+        Assertions.assertTrue(actualResult.contains(expectedResult),"Заявка не создана!");
+        System.out.println("ЛОГ: заявка успешно создана. Текст на экране: " + actualResult);
 
 
 

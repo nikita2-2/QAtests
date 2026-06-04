@@ -5,6 +5,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.Console;
 import java.time.Duration;
 import org.junit.jupiter.api.Assertions;
 
@@ -67,9 +71,32 @@ public class TestWithoutAsserts {
         driver.findElement(By.xpath("//button[contains(text(), 'Завершить')]")).click();
         System.out.println("Шаг 4 успешно заполнен и отправлен.");
 
+
+
+
+
+
         // 5 step
-        WebElement successMessageElement = driver.findElement(By.xpath("//span[contains(text(), 'Статус')]"));
-        String Text = successMessageElement.getText();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By successSpan = By.xpath("//*[contains(text(), 'Ваша заявка')]");
+
+        wait.until(ExpectedConditions.not(
+                ExpectedConditions.textToBePresentInElementLocated(successSpan, "null")
+        ));
+
+
+        String finalReceiptText = driver.findElement(successSpan).getText();
+        System.out.println("ЛОГ: заявка успешно создана. Текст на экране: " + finalReceiptText);
+
+
+
+
+
+
+
+
+
 
 
     }

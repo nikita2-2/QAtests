@@ -42,9 +42,18 @@ public class TestWithoutAsserts {
         driver.findElement(By.xpath("//button[text()='Далее']")).click();
         System.out.println("Шаг 1 успешно заполнен и отправлен.");
 
+
+
         //2 step
         driver.findElement(By.xpath("//button[contains(text(), 'брака')]")).click();
         System.out.println("Шаг 2 успешно отправлен.");
+
+
+
+        WebElement actResult = driver.findElement(By.xpath("//span[contains(text(), 'Вы выбрали')]"));
+        String actualResult = actResult.getText();
+        String expectedResult = "Вы выбрали услугу: Регистрация брака";
+        Assertions.assertTrue(actualResult.contains(expectedResult),"Неверный выбор услуги");
 
         //3 step
         driver.findElement(By.id("TextInputField-7")).sendKeys("Ivan");

@@ -48,8 +48,6 @@ public class TestWithoutAsserts {
 
 
 
-
-
         //3 step
         driver.findElement(By.id("TextInputField-7")).sendKeys("Ivan");
         driver.findElement(By.id("TextInputField-8")).sendKeys("IvanIvan");

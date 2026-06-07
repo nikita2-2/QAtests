@@ -38,13 +38,14 @@ public class UserRegistrationPage {
     private WebElement address;
 
 
-    public void fillRegistrationData(String lName, String fName, String mName, String phoneNum, String pass, String addr) {
-        lastName.sendKeys(lName);
-        firstName.sendKeys(fName);
-        middleName.sendKeys(mName);
-        phone.sendKeys(phoneNum);
-        passport.sendKeys(pass);
-        address.sendKeys(addr);
+    public void fillRegistrationData(data.UserData user) {
+        // Внутри метода страница сама достает кубики через геттеры
+        lastName.sendKeys(user.getLastName());
+        firstName.sendKeys(user.getFirstName());
+        middleName.sendKeys(user.getMiddleName());
+        phone.sendKeys(user.getPhone());
+        passport.sendKeys(user.getPassport());
+        address.sendKeys(user.getAddress());
     }
 
 

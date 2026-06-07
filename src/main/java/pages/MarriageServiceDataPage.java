@@ -17,37 +17,35 @@ public class MarriageServiceDataPage {
         this.buttons = new NavigationButtons(driver);
     }
 
-    @FindBy(id="TextInputField-21")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
     private WebElement registrationDateInput;
 
-    @FindBy(id="TextInputField-22")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[2]")
     private WebElement newLastNameInput;
 
-    @FindBy(id="TextInputField-23")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[3]")
     private WebElement spouseLastNameInput;
 
-    @FindBy(id="TextInputField-24")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[4]")
     private WebElement spouseFirstNameInput;
 
-    @FindBy(id="TextInputField-25")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[5]")
     private WebElement spouseMiddleNameInput;
 
-    @FindBy(id="TextInputField-26")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[6]")
     private WebElement spouseBirthDateInput;
 
-    @FindBy(id="TextInputField-27")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[7]")
     private WebElement spousePassportInput;
 
-    public void fillMarriageDetails(String regDate, String newLastName, String spouseLastName,
-                                    String spouseFirstName, String spouseMiddleName,
-                                    String spouseBirthDate, String spousePassport) {
-        registrationDateInput.sendKeys(regDate);
-        newLastNameInput.sendKeys(newLastName);
-        spouseLastNameInput.sendKeys(spouseLastName);
-        spouseFirstNameInput.sendKeys(spouseFirstName);
-        spouseMiddleNameInput.sendKeys(spouseMiddleName);
-        spouseBirthDateInput.sendKeys(spouseBirthDate);
-        spousePassportInput.sendKeys(spousePassport);
+    public void fillMarriageDetails(data.MarriageData marriage) {
+        registrationDateInput.sendKeys(marriage.getRegDate());
+        newLastNameInput.sendKeys(marriage.getNewLastName());
+        spouseLastNameInput.sendKeys(marriage.getSpouseLastName());
+        spouseFirstNameInput.sendKeys(marriage.getSpouseFirstName());
+        spouseMiddleNameInput.sendKeys(marriage.getSpouseMiddleName());
+        spouseBirthDateInput.sendKeys(marriage.getSpouseBirthDate());
+        spousePassportInput.sendKeys(marriage.getSpousePassport());
     }
 
 }

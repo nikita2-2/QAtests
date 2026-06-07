@@ -1,24 +1,22 @@
 package pages;
 
+
 import elements.NavigationButtons;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
-public class CitizenDataPage {
+public class AdminRegistrationPage {
 
     private WebDriver driver;
-
     public NavigationButtons buttons;
 
-    public CitizenDataPage(WebDriver driver){
+    public AdminRegistrationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.buttons = new NavigationButtons(driver);
     }
-
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
     private WebElement lastNameInput;
@@ -30,25 +28,22 @@ public class CitizenDataPage {
     private WebElement middleNameInput;
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[4]")
-    private WebElement birthDateInput;
+    private WebElement phoneInput;
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[5]")
     private WebElement passportInput;
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[6]")
-    private WebElement genderInput;
+    private WebElement birthDateInput;
 
-    @FindBy(xpath = "(//div[@role='dialog']//input)[7]")
-    private WebElement addressInput;
 
-    public void fillCitizenData(data.CitizenData citizen) {
-        lastNameInput.sendKeys(citizen.getLastName());
-        firstNameInput.sendKeys(citizen.getFirstName());
-        middleNameInput.sendKeys(citizen.getMiddleName());
-        birthDateInput.sendKeys(citizen.getBirthDate());
-        passportInput.sendKeys(citizen.getPassport());
-        genderInput.sendKeys(citizen.getGender());
-        addressInput.sendKeys(citizen.getAddress());
+    public void fillAdminRegistrationData(data.AdminData admin) {
+        lastNameInput.sendKeys(admin.getLastName());
+        firstNameInput.sendKeys(admin.getFirstName());
+        middleNameInput.sendKeys(admin.getMiddleName());
+        phoneInput.sendKeys(admin.getPhone());
+        passportInput.sendKeys(admin.getPassport());
+        birthDateInput.sendKeys(admin.getBirthDate());
     }
 
 

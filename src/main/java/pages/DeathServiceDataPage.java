@@ -20,15 +20,15 @@ public class DeathServiceDataPage {
 
     }
 
-    @FindBy(id="TextInputField-61")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
     private WebElement deathDateInput;
 
-    @FindBy(id="TextInputField-62")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[2]")
     private WebElement deathPlaceInput;
 
-    public void fillDeathDetails(String deathDate, String deathPlace) {
-        deathDateInput.sendKeys(deathDate);
-        deathPlaceInput.sendKeys(deathPlace);
+    public void fillDeathDetails(data.DeathData death) {
+        deathDateInput.sendKeys(death.getDeathDate());
+        deathPlaceInput.sendKeys(death.getDeathPlace());
     }
 
 

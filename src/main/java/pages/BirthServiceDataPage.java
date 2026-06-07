@@ -2,6 +2,7 @@ package pages;
 
 
 import elements.NavigationButtons;
+import data.BirthData;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,29 +20,28 @@ public class BirthServiceDataPage {
         this.buttons = new NavigationButtons(driver);
     }
 
-    @FindBy(id="TextInputField-42")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
     private WebElement birthPlaceInput;
 
-    @FindBy(id="TextInputField-43")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[2]")
     private WebElement motherInput;
 
-    @FindBy(id="TextInputField-44")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[3]")
     private WebElement fatherInput;
 
-    @FindBy(id="TextInputField-45")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[4]")
     private WebElement grandmotherInput;
 
-    @FindBy(id="TextInputField-46")
+    @FindBy(xpath = "(//div[@role='dialog']//input)[5]")
     private WebElement grandfatherInput;
 
 
-    public void fillBirthDetails(String birthPlace, String mother, String father,
-                                 String grandmother, String grandfather) {
-        birthPlaceInput.sendKeys(birthPlace);
-        motherInput.sendKeys(mother);
-        fatherInput.sendKeys(father);
-        grandmotherInput.sendKeys(grandmother);
-        grandfatherInput.sendKeys(grandfather);
+    public void fillBirthDetails(data.BirthData birth) {
+        birthPlaceInput.sendKeys(birth.getBirthPlace());
+        motherInput.sendKeys(birth.getMotherName());
+        fatherInput.sendKeys(birth.getFatherName());
+        grandmotherInput.sendKeys(birth.getGrandmotherName());
+        grandfatherInput.sendKeys(birth.getGrandfatherName());
     }
 
 }

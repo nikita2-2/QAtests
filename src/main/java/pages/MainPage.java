@@ -28,7 +28,7 @@ public class MainPage {
 
     public void clickLoginAsAdmin() {
         loginAsAdminBtn.click();
-        System.out.println("ЛОГ: Нажата кнопка 'Войти как администратор' на главной странице.");
+
     }
 
 

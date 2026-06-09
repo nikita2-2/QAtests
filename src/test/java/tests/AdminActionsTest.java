@@ -1,7 +1,6 @@
 package tests;
 
 import data.AdminData;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +18,7 @@ public class AdminActionsTest extends BaseTest {
     @BeforeEach
     public void setUp() {
         mainPage = new MainPage(driver);
+
         adminRegistrationPage = new AdminRegistrationPage(driver);
         adminDashboardPage = new AdminDashboardPage(driver);
 

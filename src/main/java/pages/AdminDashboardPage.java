@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class AdminDashboardPage {
-    private WebDriver driver;
+    private final  WebDriver driver;
     public NavigationButtons buttons;
     public OrdersTable table;
 
@@ -26,6 +26,7 @@ public class AdminDashboardPage {
     private By statusLocator(String orderId) {
         return By.xpath("//td[text()='" + orderId + "']/../td[5]/span");
     }
+
     public String getOrderStatusById(String orderId) {
         return driver.findElement(statusLocator(orderId)).getText();
     }

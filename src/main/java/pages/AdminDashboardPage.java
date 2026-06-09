@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class AdminDashboardPage {
-
     private WebDriver driver;
     public NavigationButtons buttons;
     public OrdersTable table;
@@ -25,10 +24,16 @@ public class AdminDashboardPage {
     @FindBy(xpath = "//button[@aria-label='Go to next page']")
     private WebElement nextPageArrow;
 
+    private By statusLocator(String orderId) {
+        return By.xpath("//td[text()='" + orderId + "']/../td[5]/span");
+    }
+    public String getOrderStatusById(String orderId) {
+        return driver.findElement(statusLocator(orderId)).getText();
+    }
+
+
     public void goToPage(int pageNumber) {
         By pageLocator = By.xpath("//button[text()='" + pageNumber + "']");
         driver.findElement(pageLocator).click();
     }
-
-
 }

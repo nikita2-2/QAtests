@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class BirthServiceDataPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;

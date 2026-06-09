@@ -5,34 +5,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pages.AdminDashboardPage;
 import pages.AdminRegistrationPage;
 import pages.MainPage;
-import java.time.Duration;
 
-public class AdminActionsTest {
-    WebDriver driver;
+
+public class AdminActionsTest extends BaseTest {
     MainPage mainPage;
     AdminRegistrationPage adminRegistrationPage;
     AdminDashboardPage adminDashboardPage;
+    AdminData dataAdmin;
 
     @BeforeEach
     public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-
         mainPage = new MainPage(driver);
         adminRegistrationPage = new AdminRegistrationPage(driver);
         adminDashboardPage = new AdminDashboardPage(driver);
-    }
 
-    @Test
-    public void testAdminCanApproveMarriageOrder() {
-        AdminData admin = AdminData.builder()
+        dataAdmin = AdminData.builder()
                 .lastName("Петров")
                 .firstName("Петр")
                 .middleName("Петрович")
@@ -40,36 +30,22 @@ public class AdminActionsTest {
                 .phone("79991112233")
                 .birthDate("01011988")
                 .build();
-        String targetOrderId = "65243";
+    }
 
-        driver.get("https://user:senlatest@regoffice.senla.eu/");
+    @Test
+    public void testAdminCanApproveMarriageOrder() {
+        String targetOrderId = "65279";
 
         mainPage.clickLoginAsAdmin();
 
-        adminRegistrationPage.fillAdminRegistrationData(admin);
+        adminRegistrationPage.fillAdminRegistrationData(dataAdmin);
         adminRegistrationPage.buttons.clickNext();
 
         adminDashboardPage.table.approveOrderById(targetOrderId);
 
-        By statusLocator = By.xpath("//td[text()='" + targetOrderId + "']/../td[5]/span");
-
-        String actualStatusText = driver.findElement(statusLocator).getText();
-
-
+        String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
+        // вынести локатор в пейдж
         Assertions.assertTrue(actualStatusText.contains("Одобрена"),
-                "Ошибка! Статус заявки не изменился на 'Одобрено'.");
-
-
-
-
-
-    }
-
-
-    @AfterEach
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+                "Ошибка! Статус заявки не изменился на 'Одобрена'.");
     }
 }

@@ -8,8 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class AdminRegistrationPage {
-
-    private WebDriver driver;
+    private final WebDriver driver;
     public NavigationButtons buttons;
 
     public AdminRegistrationPage(WebDriver driver) {
@@ -36,7 +35,6 @@ public class AdminRegistrationPage {
     @FindBy(xpath = "(//div[@role='dialog']//input)[6]")
     private WebElement birthDateInput;
 
-
     public void fillAdminRegistrationData(data.AdminData admin) {
         lastNameInput.sendKeys(admin.getLastName());
         firstNameInput.sendKeys(admin.getFirstName());
@@ -45,6 +43,4 @@ public class AdminRegistrationPage {
         passportInput.sendKeys(admin.getPassport());
         birthDateInput.sendKeys(admin.getBirthDate());
     }
-
-
 }

@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 
 public class CitizenDataPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -50,6 +49,4 @@ public class CitizenDataPage {
         genderInput.sendKeys(citizen.getGender());
         addressInput.sendKeys(citizen.getAddress());
     }
-
-
 }

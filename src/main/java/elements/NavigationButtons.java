@@ -8,7 +8,6 @@ public class NavigationButtons {
     private WebDriver driver;
 
     public NavigationButtons(WebDriver driver){
-
         this.driver = driver;
         PageFactory.initElements(driver,this);
     }
@@ -20,6 +19,7 @@ public class NavigationButtons {
 
     @FindBy(xpath = "//button[text()='Закрыть']")
     private WebElement closeBtn;
+
     @FindBy(xpath = "//button[text()='Завершить']")
     private WebElement endBtn;
 

@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class UserRegistrationPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -16,7 +15,6 @@ public class UserRegistrationPage {
         this.driver=driver;
         PageFactory.initElements(driver, this);
         this.buttons = new NavigationButtons(driver);
-
     }
 
     @FindBy(xpath = "//input[contains(@placeholder, 'фамилию')]")
@@ -39,7 +37,6 @@ public class UserRegistrationPage {
 
 
     public void fillRegistrationData(data.UserData user) {
-        // Внутри метода страница сама достает кубики через геттеры
         lastName.sendKeys(user.getLastName());
         firstName.sendKeys(user.getFirstName());
         middleName.sendKeys(user.getMiddleName());
@@ -47,6 +44,4 @@ public class UserRegistrationPage {
         passport.sendKeys(user.getPassport());
         address.sendKeys(user.getAddress());
     }
-
-
 }

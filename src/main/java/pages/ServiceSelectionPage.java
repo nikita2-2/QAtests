@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 
 public class ServiceSelectionPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -40,5 +39,4 @@ public class ServiceSelectionPage {
     public void selectDeathRegistration() {
         deathRegistrationBtn.click();
     }
-
 }

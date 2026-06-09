@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 
 public class DeathServiceDataPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -17,7 +16,6 @@ public class DeathServiceDataPage {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         this.buttons = new NavigationButtons(driver);
-
     }
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
@@ -30,6 +28,4 @@ public class DeathServiceDataPage {
         deathDateInput.sendKeys(death.getDeathDate());
         deathPlaceInput.sendKeys(death.getDeathPlace());
     }
-
-
 }

@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class MarriageServiceDataPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -47,5 +46,4 @@ public class MarriageServiceDataPage {
         spouseBirthDateInput.sendKeys(marriage.getSpouseBirthDate());
         spousePassportInput.sendKeys(marriage.getSpousePassport());
     }
-
 }

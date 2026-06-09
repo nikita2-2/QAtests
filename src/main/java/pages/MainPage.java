@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 public class MainPage {
-
     private WebDriver driver;
 
     public MainPage(WebDriver driver) {
@@ -28,8 +27,5 @@ public class MainPage {
 
     public void clickLoginAsAdmin() {
         loginAsAdminBtn.click();
-
     }
-
-
 }

@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class ApplicationStatusPage {
-
     private WebDriver driver;
 
     public NavigationButtons buttons;
@@ -28,7 +27,8 @@ public class ApplicationStatusPage {
     @FindBy(xpath = "//button[contains(text(), 'Создать новую заявку')]")
     private WebElement createNewOrderBtn;
 
-    private By successSpan = By.xpath("//span[contains(text(), 'отправлена на рассмотрение')]");
+    @FindBy(xpath = "//span[contains(text(), 'отправлена на рассмотрение')]")
+    private WebElement successSpan;
 
     public void clickRefresh() {
         refreshBtn.click();
@@ -41,11 +41,8 @@ public class ApplicationStatusPage {
     public String getFinalSuccessText() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.not(
-                ExpectedConditions.textToBePresentInElementLocated(successSpan, "null")
+                ExpectedConditions.textToBePresentInElement(successSpan, "null")
         ));
-
-        return driver.findElement(successSpan).getText();
+        return successSpan.getText();
     }
-
-
 }

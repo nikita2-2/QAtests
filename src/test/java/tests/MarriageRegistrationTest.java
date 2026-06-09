@@ -79,8 +79,3 @@ public class MarriageRegistrationTest extends BaseTest {
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."));
     }
 }
-
-
-
-
-

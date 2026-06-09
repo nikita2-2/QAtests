@@ -76,4 +76,3 @@ public class BirthRegistrationTest extends BaseTest {
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка!");
     }
 }
-

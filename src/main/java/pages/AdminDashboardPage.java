@@ -1,6 +1,5 @@
 package pages;
 
-
 import elements.NavigationButtons;
 import elements.OrdersTable;
 import org.openqa.selenium.By;
@@ -30,7 +29,6 @@ public class AdminDashboardPage {
     public String getOrderStatusById(String orderId) {
         return driver.findElement(statusLocator(orderId)).getText();
     }
-
 
     public void goToPage(int pageNumber) {
         By pageLocator = By.xpath("//button[text()='" + pageNumber + "']");

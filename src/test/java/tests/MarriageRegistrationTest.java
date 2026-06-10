@@ -3,6 +3,7 @@ package tests;
 import data.CitizenData;
 import data.MarriageData;
 import data.UserData;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -62,6 +63,10 @@ public class MarriageRegistrationTest extends BaseTest {
     }
 
     @Test
+    @Epic("Регистрация заявлений ЗАГС")
+    @Feature("Регистрация рождения")
+    @Story("Успешная подача заявки на регистрацию брака")
+    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
     public void testSuccessfulMarriageRegistrationE2E() {
         mainPage.clickLoginAsUser();
 

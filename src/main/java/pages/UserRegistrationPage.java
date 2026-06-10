@@ -1,6 +1,7 @@
 package pages;
 
 import elements.NavigationButtons;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,7 +36,7 @@ public class UserRegistrationPage {
     @FindBy(xpath = "//input[contains(@placeholder, 'прописки')]")
     private WebElement address;
 
-
+    @Step("Заполнение данных пользователя")
     public void fillRegistrationData(data.UserData user) {
         lastName.sendKeys(user.getLastName());
         firstName.sendKeys(user.getFirstName());

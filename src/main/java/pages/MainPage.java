@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,10 +22,12 @@ public class MainPage {
     @FindBy(xpath = "//button[contains(text(), 'Заказать справку')]")
     private WebElement orderCertificateBtn;
 
+    @Step("Вход как пользователь")
     public void clickLoginAsUser() {
         loginAsUserBtn.click();
     }
 
+    @Step("Вход как админ")
     public void clickLoginAsAdmin() {
         loginAsAdminBtn.click();
     }

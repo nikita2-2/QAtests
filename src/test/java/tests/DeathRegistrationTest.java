@@ -3,6 +3,7 @@ package tests;
 import data.CitizenData;
 import data.DeathData;
 import data.UserData;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -57,9 +58,10 @@ public class DeathRegistrationTest extends BaseTest {
     }
 
     @Test
-    @Epic("Регистрация гражданских заявлений")
+    @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация рождения")
-    @Story("Успешная подача заявки на регистрацию брака")
+    @Story("Успешная подача заявки на регистрацию смерти")
+    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
     public void testDeathRegistrationE2E() {
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);

@@ -3,10 +3,7 @@ package tests;
 import data.BirthData;
 import data.CitizenData;
 import data.UserData;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Step;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,6 +61,7 @@ public class BirthRegistrationTest extends BaseTest {
     @Epic("Регистрация гражданских заявлений")
     @Feature("Регистрация рождения")
     @Story("Успешная подача заявки на рождение ребенка")
+    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации рождения")
     public void testBirthRegistrationE2E() {
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);

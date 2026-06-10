@@ -1,6 +1,7 @@
 package pages;
 
 import elements.NavigationButtons;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,7 @@ public class DeathServiceDataPage {
     @FindBy(xpath = "(//div[@role='dialog']//input)[2]")
     private WebElement deathPlaceInput;
 
+    @Step("Заполнение данных услуги смерть")
     public void fillDeathDetails(data.DeathData death) {
         deathDateInput.sendKeys(death.getDeathDate());
         deathPlaceInput.sendKeys(death.getDeathPlace());

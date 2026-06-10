@@ -3,6 +3,7 @@ package pages;
 
 import elements.NavigationButtons;
 import data.BirthData;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,7 +35,7 @@ public class BirthServiceDataPage {
     @FindBy(xpath = "(//div[@role='dialog']//input)[5]")
     private WebElement grandfatherInput;
 
-
+    @Step("Заполнение данных услуги рождение")
     public void fillBirthDetails(data.BirthData birth) {
         birthPlaceInput.sendKeys(birth.getBirthPlace());
         motherInput.sendKeys(birth.getMotherName());

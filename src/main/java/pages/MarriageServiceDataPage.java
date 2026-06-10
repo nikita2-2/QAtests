@@ -1,5 +1,6 @@
 package pages;
 import elements.NavigationButtons;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,6 +38,7 @@ public class MarriageServiceDataPage {
     @FindBy(xpath = "(//div[@role='dialog']//input)[7]")
     private WebElement spousePassportInput;
 
+    @Step("Заполнение данных услуги брак")
     public void fillMarriageDetails(data.MarriageData marriage) {
         registrationDateInput.sendKeys(marriage.getRegDate());
         newLastNameInput.sendKeys(marriage.getNewLastName());

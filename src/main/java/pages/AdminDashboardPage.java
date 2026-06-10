@@ -2,6 +2,7 @@ package pages;
 
 import elements.NavigationButtons;
 import elements.OrdersTable;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,6 +32,7 @@ public class AdminDashboardPage {
         return driver.findElement(statusLocator(orderId)).getText();
     }
 
+    @Step("Переход на {pageNumber} страницу")
     public void goToPage(int pageNumber) {
         By pageLocator = By.xpath("//button[text()='" + pageNumber + "']");
         driver.findElement(pageLocator).click();

@@ -1,6 +1,8 @@
 package tests;
 
 import data.AdminData;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,13 +35,17 @@ public class AdminActionsTest extends BaseTest {
     }
 
     @Test
+    @Epic("Панель админа ЗАГС")
+    @Feature("")
     public void testAdminCanApproveMarriageOrder() {
-        String targetOrderId = "65279";
+        String targetOrderId = "65095";
 
         mainPage.clickLoginAsAdmin();
 
         adminRegistrationPage.fillAdminRegistrationData(dataAdmin);
         adminRegistrationPage.buttons.clickNext();
+
+        adminDashboardPage.goToPage(2);
 
         adminDashboardPage.table.approveOrderById(targetOrderId);
 

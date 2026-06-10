@@ -3,6 +3,9 @@ package tests;
 import data.CitizenData;
 import data.DeathData;
 import data.UserData;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +57,9 @@ public class DeathRegistrationTest extends BaseTest {
     }
 
     @Test
+    @Epic("Регистрация гражданских заявлений")
+    @Feature("Регистрация рождения")
+    @Story("Успешная подача заявки на регистрацию брака")
     public void testDeathRegistrationE2E() {
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);

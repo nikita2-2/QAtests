@@ -1,13 +1,9 @@
 package tests;
 
-import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.io.ByteArrayInputStream;
 import java.time.Duration;
 
 public class BaseTest {
@@ -26,10 +22,7 @@ public class BaseTest {
     @AfterEach
     public void tearDown() {
         if (driver != null) {
-            if (isTestFailed) {
-                byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-                Allure.addAttachment("Скриншот в момент падения", new ByteArrayInputStream(screenshot));
-            }
+            ScreenshotUtil.captureScreenshotIfFailed(driver, isTestFailed);
             driver.quit();
         }
     }

@@ -76,6 +76,6 @@ public class MarriageRegistrationTest extends BaseTest {
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
 
-        Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."));
+        Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
     }
 }

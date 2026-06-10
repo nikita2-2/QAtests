@@ -44,8 +44,8 @@ public class AdminActionsTest extends BaseTest {
         adminDashboardPage.table.approveOrderById(targetOrderId);
 
         String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
-        // вынести локатор в пейдж
+
         Assertions.assertTrue(actualStatusText.contains("Одобрена"),
-                "Ошибка! Статус заявки не изменился на 'Одобрена'.");
+                "Ошибка, статус заявки не изменился на 'Одобрена'.");
     }
 }

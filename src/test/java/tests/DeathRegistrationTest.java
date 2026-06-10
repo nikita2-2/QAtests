@@ -59,7 +59,7 @@ public class DeathRegistrationTest extends BaseTest {
 
     @Test
     @Epic("Регистрация заявлений ЗАГС")
-    @Feature("Регистрация рождения")
+    @Feature("Регистрация смерти")
     @Story("Успешная подача заявки на регистрацию смерти")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
     public void testDeathRegistrationE2E() {
@@ -79,5 +79,6 @@ public class DeathRegistrationTest extends BaseTest {
         String finalResultText = applicationStatusPage.getFinalSuccessText();
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
+        isTestFailed = false;
     }
 }

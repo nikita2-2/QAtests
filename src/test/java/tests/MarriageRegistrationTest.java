@@ -64,7 +64,7 @@ public class MarriageRegistrationTest extends BaseTest {
 
     @Test
     @Epic("Регистрация заявлений ЗАГС")
-    @Feature("Регистрация рождения")
+    @Feature("Регистрация брака")
     @Story("Успешная подача заявки на регистрацию брака")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
     public void testSuccessfulMarriageRegistrationE2E() {
@@ -85,5 +85,6 @@ public class MarriageRegistrationTest extends BaseTest {
         String finalResultText = applicationStatusPage.getFinalSuccessText();
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
+        isTestFailed = false;
     }
 }

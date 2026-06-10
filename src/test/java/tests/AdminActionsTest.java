@@ -12,7 +12,6 @@ import pages.AdminDashboardPage;
 import pages.AdminRegistrationPage;
 import pages.MainPage;
 
-
 public class AdminActionsTest extends BaseTest {
     MainPage mainPage;
     AdminRegistrationPage adminRegistrationPage;
@@ -57,5 +56,6 @@ public class AdminActionsTest extends BaseTest {
 
         Assertions.assertTrue(actualStatusText.contains("Одобрена"),
                 "Ошибка, статус заявки не изменился на 'Одобрена'.");
+        isTestFailed = false;
     }
 }

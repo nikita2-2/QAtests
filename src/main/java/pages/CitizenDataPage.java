@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
 public class CitizenDataPage {
     private WebDriver driver;
 
@@ -18,7 +17,6 @@ public class CitizenDataPage {
         PageFactory.initElements(driver, this);
         this.buttons = new NavigationButtons(driver);
     }
-
 
     @FindBy(xpath = "(//div[@role='dialog']//input)[1]")
     private WebElement lastNameInput;

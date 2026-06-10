@@ -1,8 +1,6 @@
 package pages;
 
-
 import elements.NavigationButtons;
-import data.BirthData;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

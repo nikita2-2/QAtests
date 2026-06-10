@@ -58,7 +58,7 @@ public class BirthRegistrationTest extends BaseTest {
     }
 
     @Test
-    @Epic("Регистрация гражданских заявлений")
+    @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация рождения")
     @Story("Успешная подача заявки на рождение ребенка")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации рождения")
@@ -79,5 +79,6 @@ public class BirthRegistrationTest extends BaseTest {
         String finalResultText = applicationStatusPage.getFinalSuccessText();
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
+        isTestFailed = false;
     }
 }

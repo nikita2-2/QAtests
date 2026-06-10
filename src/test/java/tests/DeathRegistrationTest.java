@@ -7,11 +7,13 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
 
+@Slf4j
 public class DeathRegistrationTest extends BaseTest {
     MainPage mainPage;
     UserRegistrationPage userRegistrationPage;
@@ -25,6 +27,7 @@ public class DeathRegistrationTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
+
         mainPage = new MainPage(driver);
         userRegistrationPage = new UserRegistrationPage(driver);
         serviceSelectionPage = new ServiceSelectionPage(driver);
@@ -45,14 +48,14 @@ public class DeathRegistrationTest extends BaseTest {
                 .lastName("Петров")
                 .firstName("Петр")
                 .middleName("Петрович")
-                .birthDate("01011995")
+                .birthDate("")
                 .passport("KH765321")
                 .gender("Муж")
                 .address("Брест, ул. Советская, 5")
                 .build();
 
         deathData = DeathData.builder()
-                .deathDate("10102025")
+                .deathDate("01011995")
                 .deathPlace("город Минск улица Казинца")
                 .build();
     }
@@ -63,6 +66,7 @@ public class DeathRegistrationTest extends BaseTest {
     @Story("Успешная подача заявки на регистрацию смерти")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
     public void testDeathRegistrationE2E() {
+        log.info("ТЕСТ успешная подача заявления на регистрацию смерти запущен");
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();
@@ -77,6 +81,8 @@ public class DeathRegistrationTest extends BaseTest {
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
+
+        log.info("Финальная проверка на успешную отправку заявки");
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
         isTestFailed = false;

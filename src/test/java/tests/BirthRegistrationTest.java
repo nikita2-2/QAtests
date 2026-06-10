@@ -4,11 +4,13 @@ import data.BirthData;
 import data.CitizenData;
 import data.UserData;
 import io.qameta.allure.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
 
+@Slf4j
 public class BirthRegistrationTest extends BaseTest {
     MainPage mainPage;
     UserRegistrationPage userRegistrationPage;
@@ -63,6 +65,7 @@ public class BirthRegistrationTest extends BaseTest {
     @Story("Успешная подача заявки на рождение ребенка")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации рождения")
     public void testBirthRegistrationE2E() {
+        log.info("ТЕСТ успешная подача заявки на рождение ребенка запущен");
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();
@@ -77,6 +80,8 @@ public class BirthRegistrationTest extends BaseTest {
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
+
+        log.info("Финальная проверка на успешную отправку заявки");
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
         isTestFailed = false;

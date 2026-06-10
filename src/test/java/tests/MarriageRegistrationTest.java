@@ -7,11 +7,13 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
 
+@Slf4j
 public class MarriageRegistrationTest extends BaseTest {
     MainPage mainPage;
     UserRegistrationPage userRegistrationPage;
@@ -68,6 +70,7 @@ public class MarriageRegistrationTest extends BaseTest {
     @Story("Успешная подача заявки на регистрацию брака")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
     public void testSuccessfulMarriageRegistrationE2E() {
+        log.info("ТЕСТ успешная подача заявки на регистрацию брака");
         mainPage.clickLoginAsUser();
 
         userRegistrationPage.fillRegistrationData(dataUser);
@@ -83,6 +86,8 @@ public class MarriageRegistrationTest extends BaseTest {
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
+
+        log.info("Финальная проверка на успешную отправку заявки");
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
         isTestFailed = false;

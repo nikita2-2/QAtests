@@ -1,17 +1,17 @@
 package tests.api.send_user_request;
 
 import data.UserRequestData;
+import data.UserRequestResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
+import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.notNullValue;
 
 @Slf4j
 public class UserRequestMarriageTest extends BaseApiTest {
@@ -22,8 +22,7 @@ public class UserRequestMarriageTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию брака и возращается ее номер")
     @Test
     public void testCreateMarriageRequestApi() {
-        log.info("СТАРТ API ТЕСТА: Успешное создание заявки на брак через /sendUserRequest");
-
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData marriageBody = UserRequestData.builder()
                 .mode("wedding")
 
@@ -50,22 +49,14 @@ public class UserRequestMarriageTest extends BaseApiTest {
 
                 .build();
 
-        Response response = given()
-                .contentType(ContentType.JSON)
+        UserRequestResponse responseBody = given()
                 .body(marriageBody)
-
                 .when()
                 .post("/sendUserRequest")
-
                 .then()
-                .log().ifValidationFails()
-                .log().all()
-                .statusCode(200)
-                .body("data.applicationid", notNullValue())
-                .extract().response();
-        int createdApplicationId = response.path("data.applicationid");
-        log.info("Заявка на регистрацию брака номер {} успешно создана и отправлена", createdApplicationId);
+                .extract()
+                .as(UserRequestResponse.class);
 
-        log.info("API ТЕСТ УСПЕШНО ЗАВЕРШЕН");
+        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 }

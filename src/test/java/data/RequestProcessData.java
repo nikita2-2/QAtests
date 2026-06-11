@@ -1,6 +1,10 @@
 package data;
 
+import com.fasterxml.jackson.annotation.JsonDeserializeAs;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.NumberDeserializers;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +12,7 @@ import lombok.Data;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RequestProcessData {
-    private int applId;
-    private int staffid;
+    private Integer applId;
+    private Integer staffid;
     private String action;
 }

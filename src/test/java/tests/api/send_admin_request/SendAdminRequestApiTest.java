@@ -1,22 +1,29 @@
 package tests.api.send_admin_request;
 
 import data.AdminRequestData;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import data.AdminResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
+import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.notNullValue;
+
 
 @Slf4j
 public class SendAdminRequestApiTest extends BaseApiTest {
 
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Создание админа")
+    @Story("Создание нового администратора ЗАГС")
+    @Description("Тест отправляет валидный JSON на /sendAdminRequest и проверяет создание админа")
     @Test
     public void testCreateAdminUserSuccessfully() {
-        log.info("API ТЕСТ: Создание пользователя-администратора через /sendAdminRequest");
-
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         AdminRequestData adminBody = AdminRequestData.builder()
                 .dateofbirth("1985-01-01")
                 .personalFirstName("Петр")
@@ -26,22 +33,14 @@ public class SendAdminRequestApiTest extends BaseApiTest {
                 .personalPhoneNumber("79998887766")
                 .build();
 
-        Response response = given()
-                .contentType(ContentType.JSON)
+        AdminResponse responseBody = given()
                 .body(adminBody)
-
                 .when()
                 .post("/sendAdminRequest")
-
                 .then()
-                .log().ifValidationFails()
-                .statusCode(200)
-                .body("data.staffid", notNullValue())
-                .body("data.staffid", greaterThan(0))
-                .extract().response();
-        int createdApplicationId = response.path("data.staffid");
-        log.info("Админ с айди {} успешно создан", createdApplicationId);
+                .extract()
+                .as(AdminResponse.class);
 
-        log.info("API ТЕСТ УСПЕШНО ЗАВЕРШЕН");
+        Assertions.assertNotNull(responseBody.getStaffid(), "ID админа пустой!");
     }
 }

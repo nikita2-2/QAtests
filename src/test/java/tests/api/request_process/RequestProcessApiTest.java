@@ -1,46 +1,42 @@
 package tests.api.request_process;
 
+import data.ProcessResponse;
 import data.RequestProcessData;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
+import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 @Slf4j
 public class RequestProcessApiTest extends BaseApiTest {
 
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Работа с заявками")
+    @Story("Изменение статуса заявки")
+    @Description("Тест проверяет одобрение заявки по заданному айди заявки и админа")
     @Test
     public void testProcessApplicationSuccessfully(){
-        log.info("API ТЕСТ: Изменение статуса заявки через /requestProcess");
-
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         RequestProcessData processBody = RequestProcessData.builder()
-                .applId(60001)
-                .staffid(35988)
+                .applId(64011)
+                .staffid(72703)
                 .action("approved")
                 .build();
 
-        Response response = given()
-                .contentType(ContentType.JSON)
+        ProcessResponse responseBody = given()
                 .body(processBody)
-
                 .when()
                 .post("/requestProcess")
-
                 .then()
-                .log().ifValidationFails()
-                .statusCode(200)
-                .body("data.applicationid", equalTo(processBody.getApplId()))
-                .body("data.statusofapplication", equalTo(processBody.getAction()))
-                .extract().response();
+                .extract()
+                .as(ProcessResponse.class);
+        Assertions.assertEquals("approved", responseBody.getData().getStatusofapplication(), "Статус заявки не изменился на 'approved'!");
 
-
-        int createdApplicationId = response.path("data.applicationid");
-        String changedStatus = response.path("data.statusofapplication");
-        log.info("Cтатус заявки c номером {} успешно изменен на {}", createdApplicationId, changedStatus );
-
-        log.info("API ТЕСТ УСПЕШНО ЗАВЕРШЕН");
     }
 }

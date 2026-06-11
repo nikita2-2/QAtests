@@ -1,39 +1,36 @@
 package tests.api.get_appl_status;
 
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
+import data.UserRequestResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
+import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Slf4j
 public class GetApplStatusApiTest extends BaseApiTest {
 
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Работа с заявками")
+    @Story("Получение заявки по айди")
+    @Description("Тест проверяет получение заявки по айди")
     @Test
     public void testGetApplicationStatusSuccessfully() {
-        log.info("API ТЕСТ: Получение статуса заявки по ID");
-
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         int targetApplicationId = 65372;
-
-        Response response = given()
+        UserRequestResponse responseBody = given()
                 .pathParam("applicationId", targetApplicationId)
-                .contentType(ContentType.JSON)
-
                 .when()
                 .get("/getApplStatus/{applicationId}")
-
                 .then()
-                .log().ifValidationFails()
-                .statusCode(200)
+                .extract()
+                .as(UserRequestResponse.class);
 
-                .body("data.statusofapplication", notNullValue())
-                .extract().response();
-
-        String changedStatus = response.path("data.statusofapplication");
-        log.info("Cтатус заявки c номером {} - {}", targetApplicationId, changedStatus );
-
-        log.info("API ТЕСТ УСПЕШНО ЗАВЕРШЕН");
+        assertNotNull(responseBody.getData().getStatusofapplication(), "Статус полученной заявки пустой!");
     }
 }

@@ -1,34 +1,33 @@
 package tests.api.get_applications;
 
-import io.restassured.http.ContentType;
-import lombok.extern.slf4j.Slf4j;
+import data.GetApplicationsResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
+import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@Slf4j
 public class GetApplicationsApiTest extends BaseApiTest {
 
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Работа с заявками")
+    @Story("Получение списка заявок с пагинацией")
+    @Description("Тест запрашивает страницу заявок через параметры")
     @Test
     public void testGetApplicationsWithPagination() {
-        log.info("API ТЕСТ: Получение списка заявок с пагинацией");
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
 
-        given()
-                .contentType(ContentType.JSON)
-                .queryParam("page", 1)
-                .queryParam("size", 10)
-
+        GetApplicationsResponse responseBody = given()
                 .when()
                 .get("/getApplications")
-
                 .then()
-                .log().ifValidationFails()
-                .statusCode(200)
-                .body("data", is(not(empty())));
+                .extract()
+                .as(GetApplicationsResponse.class);
 
-
-        log.info("Страница со списком заявок получена");
-        log.info("API ТЕСТ УСПЕШНО ЗАВЕРШЕН");
+        assertFalse(responseBody.getData().isEmpty(), "Сервер вернул пустой список заявок!");
     }
 }

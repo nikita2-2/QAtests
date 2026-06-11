@@ -1,4 +1,4 @@
-package tests;
+package tests.ui;
 
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;

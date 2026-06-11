@@ -1,4 +1,4 @@
-package tests;
+package tests.ui;
 
 import data.BirthData;
 import data.CitizenData;

@@ -1,4 +1,4 @@
-package tests;
+package tests.ui;
 
 import data.AdminData;
 import io.qameta.allure.Description;

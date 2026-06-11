@@ -1,7 +1,7 @@
-package tests;
+package tests.ui;
 
 import data.CitizenData;
-import data.MarriageData;
+import data.DeathData;
 import data.UserData;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
@@ -14,24 +14,25 @@ import org.junit.jupiter.api.Test;
 import pages.*;
 
 @Slf4j
-public class MarriageRegistrationTest extends BaseTest {
+public class DeathRegistrationTest extends BaseTest {
     MainPage mainPage;
     UserRegistrationPage userRegistrationPage;
     ServiceSelectionPage serviceSelectionPage;
     CitizenDataPage citizenDataPage;
-    MarriageServiceDataPage marriageServiceDataPage;
+    DeathServiceDataPage deathServiceDataPage;
     ApplicationStatusPage applicationStatusPage;
     UserData dataUser;
     CitizenData dataCitizen;
-    MarriageData marriageData;
+    DeathData deathData;
 
     @BeforeEach
     public void setUp() {
+
         mainPage = new MainPage(driver);
         userRegistrationPage = new UserRegistrationPage(driver);
         serviceSelectionPage = new ServiceSelectionPage(driver);
         citizenDataPage = new CitizenDataPage(driver);
-        marriageServiceDataPage = new MarriageServiceDataPage(driver);
+        deathServiceDataPage = new DeathServiceDataPage(driver);
         applicationStatusPage = new ApplicationStatusPage(driver);
 
         dataUser = UserData.builder()
@@ -47,42 +48,36 @@ public class MarriageRegistrationTest extends BaseTest {
                 .lastName("Петров")
                 .firstName("Петр")
                 .middleName("Петрович")
-                .birthDate("01011995")
+                .birthDate("10101995")
                 .passport("KH765321")
                 .gender("Муж")
                 .address("Брест, ул. Советская, 5")
                 .build();
 
-        marriageData = MarriageData.builder()
-                .regDate("12122026")
-                .newLastName("Иванова")
-                .spouseLastName("Сидорова")
-                .spouseFirstName("Мария")
-                .spouseMiddleName("Игоревна")
-                .spouseBirthDate("05051998")
-                .spousePassport("MP9876543")
+        deathData = DeathData.builder()
+                .deathDate("01011995")
+                .deathPlace("город Минск улица Казинца")
                 .build();
     }
 
     @Test
     @Epic("Регистрация заявлений ЗАГС")
-    @Feature("Регистрация брака")
-    @Story("Успешная подача заявки на регистрацию брака")
-    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
-    public void testSuccessfulMarriageRegistrationE2E() {
-        log.info("ТЕСТ успешная подача заявки на регистрацию брака");
+    @Feature("Регистрация смерти")
+    @Story("Успешная подача заявки на регистрацию смерти")
+    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
+    public void testDeathRegistrationE2E() {
+        log.info("ТЕСТ успешная подача заявления на регистрацию смерти запущен");
         mainPage.clickLoginAsUser();
-
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();
 
-        serviceSelectionPage.selectMarriageRegistration();
+        serviceSelectionPage.selectDeathRegistration();
 
         citizenDataPage.fillCitizenData(dataCitizen);
         citizenDataPage.buttons.clickNext();
 
-        marriageServiceDataPage.fillMarriageDetails(marriageData);
-        marriageServiceDataPage.buttons.clickEnd();
+        deathServiceDataPage.fillDeathDetails(deathData);
+        deathServiceDataPage.buttons.clickEnd();
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();

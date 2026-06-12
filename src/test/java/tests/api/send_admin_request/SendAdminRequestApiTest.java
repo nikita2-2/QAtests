@@ -26,20 +26,21 @@ public class SendAdminRequestApiTest extends BaseApiTest {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         AdminRequestData adminBody = AdminRequestData.builder()
                 .dateofbirth("1985-01-01")
-                .personalFirstName("Петр")
-                .personalLastName("Петров")
-                .personalMiddleName("Петрович")
-                .personalNumberOfPassport("KH123456")
-                .personalPhoneNumber("79998887766")
+                .personalFirstName("smdfsk")
+                .personalLastName("smdfsk")
+                .personalMiddleName("smdfsk")
+                .personalNumberOfPassport("ФИ123456")
+                .personalPhoneNumber("7999123445")
                 .build();
 
         AdminResponse responseBody = given()
                 .body(adminBody)
                 .when()
-                .post("/sendAdminRequest")
+                .post("/sendAdminRequest/")
                 .then()
                 .extract()
                 .as(AdminResponse.class);
+
 
         Assertions.assertNotNull(responseBody.getStaffid(), "ID админа пустой!");
     }

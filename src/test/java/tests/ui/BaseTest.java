@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ScreenshotUtil;
 
 public class BaseTest {
     protected static WebDriver driver;

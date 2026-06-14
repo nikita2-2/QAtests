@@ -5,5 +5,11 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdminResponse {
-    private int staffid;
+    private DataBlock data;
+    private String requestId;
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class DataBlock {
+        private Integer staffid; // Наш заветный ID админа!
+    }
 }

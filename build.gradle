@@ -37,6 +37,8 @@ dependencies {
 
     testImplementation 'commons-codec:commons-codec:1.16.1'
     testImplementation 'com.fasterxml.jackson.core:jackson-core:2.21.3'
+
+    testImplementation 'org.postgresql:postgresql:42.7.3'
 }
 
 test {

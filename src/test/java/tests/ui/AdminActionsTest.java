@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import pages.AdminDashboardPage;
 import pages.AdminRegistrationPage;
 import pages.MainPage;
+import java.time.Duration;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
 public class AdminActionsTest extends BaseTest {
@@ -43,7 +45,7 @@ public class AdminActionsTest extends BaseTest {
     @Story("Одобрение заявки по айди")
     @Description("ТТест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
     public void testAdminCanApproveMarriageOrder() {
-        String targetOrderId = "65095";
+        String targetOrderId = "65101";
 
         log.info("ТЕСТ одобрение заявки по айди запущен");
 
@@ -55,6 +57,9 @@ public class AdminActionsTest extends BaseTest {
         adminDashboardPage.goToPage(2);
 
         adminDashboardPage.table.approveOrderById(targetOrderId);
+
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(d -> adminDashboardPage.getOrderStatusById(targetOrderId).contains("Одобрена"));
 
         String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
 

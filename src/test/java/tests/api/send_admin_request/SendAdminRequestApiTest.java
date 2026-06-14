@@ -20,7 +20,7 @@ public class SendAdminRequestApiTest extends BaseApiTest {
     @Epic("АПИ ТЕСТЫ")
     @Feature("Создание админа")
     @Story("Создание нового администратора ЗАГС")
-    @Description("Тест отправляет валидный JSON на /sendAdminRequest и проверяет создание админа")
+    @Description("Тест отправляет валидный JSON на /sendAdminRequest/ и проверяет создание админа")
     @Test
     public void testCreateAdminUserSuccessfully() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
@@ -42,6 +42,6 @@ public class SendAdminRequestApiTest extends BaseApiTest {
                 .as(AdminResponse.class);
 
 
-        Assertions.assertNotNull(responseBody.getStaffid(), "ID админа пустой!");
+        Assertions.assertNotNull(responseBody.getData().getStaffid(), "ID админа пустой!");
     }
 }

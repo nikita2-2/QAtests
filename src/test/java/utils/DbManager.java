@@ -1,8 +1,11 @@
 package utils;
 
 import java.sql.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DbManager {
+    private static final Logger log = LoggerFactory.getLogger(DbManager.class);
     private static final String URL = "jdbc:postgresql://86.57.161.116:50432/register_office";
     private static final String USER = "user";
     private static final String PASSWORD = "user_senla";
@@ -17,6 +20,7 @@ public class DbManager {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, applicantId);
+            log.info("Поиск пользователя по айди в БД");
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -36,6 +40,7 @@ public class DbManager {
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, staffid);
+            log.info("Поиск админа по айди в БД");
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {

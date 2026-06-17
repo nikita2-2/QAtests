@@ -34,6 +34,35 @@ public class UserRequestMarriageTest extends BaseApiTest {
         Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 
+    @Test
+    @Epic("АПИ ТЕСТЫ")
+    @Story("Ошибка авторизации регистрации брака")
+    public void testCreateMarriageRequestWithWrongAuth() {
+        UserRequestData birthBody = createMarriageData();
+        given()
+                .auth().basic("user", "PASSWORD")
+                .contentType(io.restassured.http.ContentType.JSON)
+                .body(birthBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    @Epic("АПИ ТЕСТЫ")
+    @Story("Ошибка валидации регистрации брака")
+    public void testCreateMarriageRequestWithEmptyMode() {
+        UserRequestData invalidBody = UserRequestData.builder().personalFirstName("Петр").build();
+        given()
+                .spec(Specifications.requestSpec())
+                .body(invalidBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .statusCode(400);
+    }
+
     private UserRequestData createMarriageData(){
         return UserRequestData.builder()
                 .mode("wedding")

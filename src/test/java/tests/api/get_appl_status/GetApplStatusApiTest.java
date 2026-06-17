@@ -42,6 +42,36 @@ public class GetApplStatusApiTest extends BaseApiTest {
         assertNotNull(responsesBody.getData().getStatusofapplication(), "Статус полученной заявки пустой!");
     }
 
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Работа с заявками")
+    @Story("Ошибка валидации")
+    @Description("Негативный тест: проверка, что при передаче отрицательного ID сервер возвращает ошибку клиента")
+    @Test
+    public void testGetApplicationStatusWithInvalidId() {
+        given()
+                .spec(Specifications.requestSpec())
+                .pathParam("applicationId", -999)
+                .when()
+                .get("/getApplStatus/{applicationId}")
+                .then()
+                .statusCode(400);
+    }
+
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Работа с заявками")
+    @Story("Ошибка авторизации")
+    @Description("Негативный тест: проверка, что при неверном пароле сервер возвращает 401")
+    @Test
+    public void testGetApplicationStatusWithWrongAuth() {
+        given()
+                .auth().basic("user", "WRONG_PASSWORD")
+                .pathParam("applicationId", 11111)
+                .when()
+                .get("/getApplStatus/{applicationId}")
+                .then()
+                .statusCode(401);
+    }
+
     private UserRequestData createBirthForApiStatus() {
         return UserRequestData.builder()
                 .mode("birth")

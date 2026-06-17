@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SendAdminRequestApiTest extends BaseApiTest {
 
@@ -21,14 +22,7 @@ public class SendAdminRequestApiTest extends BaseApiTest {
     @Test
     public void testCreateAdminUserSuccessfully() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        AdminRequestData adminBody = AdminRequestData.builder()
-                .dateofbirth("1985-01-01")
-                .personalFirstName("smdfsk")
-                .personalLastName("smdfsk")
-                .personalMiddleName("smdfsk")
-                .personalNumberOfPassport("ФИ123456")
-                .personalPhoneNumber("7999123445")
-                .build();
+        AdminRequestData adminBody = createAdminData();
 
         AdminResponse responseBody = given()
                 .body(adminBody)
@@ -38,7 +32,73 @@ public class SendAdminRequestApiTest extends BaseApiTest {
                 .extract()
                 .as(AdminResponse.class);
 
-
         Assertions.assertNotNull(responseBody.getData().getStaffid(), "ID админа пустой!");
+    }
+
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Создание админа")
+    @Story("Создание нового администратора ЗАГС")
+    @Description("Тест отправляет валидный JSON на /sendAdminRequest/ и проверяет айди админа")
+    @Test
+    public void testCreateAdminUserSuccessfullyCheckId() {
+        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
+        AdminRequestData adminBody = createAdminData();
+
+        AdminResponse responseBody = given()
+                .body(adminBody)
+                .when()
+                .post("/sendAdminRequest/")
+                .then()
+                .extract()
+                .as(AdminResponse.class);
+
+        assertTrue(responseBody.getData().getStaffid() > 0,
+                "Ошибка: ID созданного админа должен быть больше нуля!");
+    }
+
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Создание админа")
+    @Story("Ошибка авторизации регистрации админа")
+    @Description("Негативный тест: проверка, что при неверном пароле сервер возвращает 401")
+    @Test
+    public void testCreateAdminWithWrongAuth() {
+        AdminRequestData adminBody = createAdminData();
+
+        given()
+                .auth().basic("user", "WRONG_PASSWORD")
+                .contentType(io.restassured.http.ContentType.JSON)
+                .body(adminBody)
+                .when()
+                .post("/sendAdminRequest/")
+                .then()
+                .statusCode(401);
+    }
+
+    @Epic("АПИ ТЕСТЫ")
+    @Feature("Создание админа")
+    @Story("Ошибка валидации регистрации админа")
+    @Description("Негативный тест: проверка, что при пустом JSON сервер возвращает 400")
+    @Test
+    public void testCreateAdminWithInvalidData() {
+        AdminRequestData invalidBody = AdminRequestData.builder().build();
+
+        given()
+                .spec(Specifications.requestSpec())
+                .body(invalidBody)
+                .when()
+                .post("/sendAdminRequest/")
+                .then()
+                .statusCode(400);
+    }
+
+    private AdminRequestData createAdminData(){
+        return AdminRequestData.builder()
+                .dateofbirth("1985-01-01")
+                .personalFirstName("smdfsk")
+                .personalLastName("smdfsk")
+                .personalMiddleName("smdfsk")
+                .personalNumberOfPassport("ФИ123456")
+                .personalPhoneNumber("7999123445")
+                .build();
     }
 }

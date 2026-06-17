@@ -36,6 +36,35 @@ public class UserRequestDeathTest extends BaseApiTest {
         Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 
+    @Test
+    @Epic("АПИ ТЕСТЫ")
+    @Story("Ошибка авторизации регистрации смерти")
+    public void testCreateDeathRequestWithWrongAuth() {
+        UserRequestData birthBody = createDeathData();
+        given()
+                .auth().basic("user", "PASSWORD")
+                .contentType(io.restassured.http.ContentType.JSON)
+                .body(birthBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .statusCode(401);
+    }
+
+    @Test
+    @Epic("АПИ ТЕСТЫ")
+    @Story("Ошибка валидации регистрации смерти")
+    public void testCreateDeathRequestWithEmptyMode() {
+        UserRequestData invalidBody = UserRequestData.builder().personalFirstName("Петр").build();
+        given()
+                .spec(Specifications.requestSpec())
+                .body(invalidBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .statusCode(400);
+    }
+
     private UserRequestData createDeathData(){
         return UserRequestData.builder()
                 .mode("death")

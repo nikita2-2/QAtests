@@ -32,8 +32,15 @@ public class UserSaveDbTest extends BaseApiTest {
                 .as(UserRequestResponse.class);
 
         int createdUserId = responseBody.getData().getApplicantid();
-        String actualUserFromDb = DbManager.getApplicantNameById(createdUserId);
-        assertEquals(name, actualUserFromDb, "Имя в БД не совпадает с отправленным по API!");
+        int createdApplicationId = responseBody.getData().getApplicationid();
+        try {
+            String actualUserFromDb = DbManager.getApplicantNameById(createdUserId);
+            assertEquals(name, actualUserFromDb, "Имя в БД не совпадает с отправленным по API!");
+        } finally {
+            if (createdUserId > 0 && createdApplicationId > 0) {
+                DbManager.deleteApplicantWithApplication(createdUserId, createdApplicationId);
+            }
+        }
     }
 
     private UserRequestData createUserTestDB(){

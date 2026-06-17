@@ -78,4 +78,26 @@ public class DbManager {
         }
         return null;
     }
+
+    public static void deleteApplicantWithApplication(int applicantId, int applicationId) {
+        String deleteApplicationSql = "DELETE FROM reg_office.applications WHERE applicationid = ?";
+        String deleteApplicantSql = "DELETE FROM reg_office.applicants WHERE applicantid = ?";
+
+        try (Connection conn = getConnection()) {
+            try (PreparedStatement pstmt1 = conn.prepareStatement(deleteApplicationSql)) {
+                pstmt1.setInt(1, applicationId);
+                pstmt1.executeUpdate();
+                log.info("Очистка БД: Успешно удалена заявка с ID" + applicationId);
+            }
+
+            try (PreparedStatement pstmt2 = conn.prepareStatement(deleteApplicantSql)) {
+                pstmt2.setInt(1, applicantId);
+                pstmt2.executeUpdate();
+                log.info("Очистка БД: Успешно удален пользователь с ID " + applicantId);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

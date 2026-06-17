@@ -8,10 +8,7 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
-import java.util.List;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class GetApplicationsApiTestArr extends BaseApiTest {
 

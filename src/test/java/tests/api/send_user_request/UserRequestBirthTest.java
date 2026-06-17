@@ -3,7 +3,6 @@ package tests.api.send_user_request;
 import data.UserRequestData;
 import data.UserRequestResponse;
 import io.qameta.allure.*;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
@@ -11,7 +10,6 @@ import tests.api.Specifications;
 
 import static io.restassured.RestAssured.given;
 
-@Slf4j
 public class UserRequestBirthTest extends BaseApiTest {
 
     @Epic("АПИ ТЕСТЫ")

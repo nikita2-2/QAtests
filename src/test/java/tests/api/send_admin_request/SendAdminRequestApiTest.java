@@ -6,15 +6,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
 
-
-@Slf4j
 public class SendAdminRequestApiTest extends BaseApiTest {
 
     @Epic("АПИ ТЕСТЫ")

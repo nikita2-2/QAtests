@@ -21,7 +21,21 @@ public class UserRequestBirthTest extends BaseApiTest {
     @Test
     public void testCreateBirthRequestApi() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData birthBody = UserRequestData.builder()
+        UserRequestData birthBody = createBirthData();
+
+        UserRequestResponse responseBody = given()
+                .body(birthBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .extract()
+                .as(UserRequestResponse.class);
+
+        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
+        }
+
+    private UserRequestData createBirthData(){
+        return UserRequestData.builder()
                 .mode("birth")
 
                 .personalFirstName("Петя")
@@ -50,15 +64,5 @@ public class UserRequestBirthTest extends BaseApiTest {
                 .birth_father("Egor")
 
                 .build();
-
-        UserRequestResponse responseBody = given()
-                .body(birthBody)
-                .when()
-                .post("/sendUserRequest")
-                .then()
-                .extract()
-                .as(UserRequestResponse.class);
-
-        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 }

@@ -70,7 +70,6 @@ public class MarriageRegistrationTest extends BaseTest {
     @Story("Успешная подача заявки на регистрацию брака")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
     public void testSuccessfulMarriageRegistrationE2E() {
-        log.info("ТЕСТ успешная подача заявки на регистрацию брака");
         mainPage.clickLoginAsUser();
 
         userRegistrationPage.fillRegistrationData(dataUser);
@@ -86,8 +85,6 @@ public class MarriageRegistrationTest extends BaseTest {
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
-
-        log.info("Финальная проверка на успешную отправку заявки");
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
         isTestFailed = false;

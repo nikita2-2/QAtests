@@ -66,7 +66,6 @@ public class DeathRegistrationTest extends BaseTest {
     @Story("Успешная подача заявки на регистрацию смерти")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
     public void testDeathRegistrationE2E() {
-        log.info("ТЕСТ успешная подача заявления на регистрацию смерти запущен");
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();
@@ -81,8 +80,6 @@ public class DeathRegistrationTest extends BaseTest {
 
         applicationStatusPage.clickRefresh();
         String finalResultText = applicationStatusPage.getFinalSuccessText();
-
-        log.info("Финальная проверка на успешную отправку заявки");
 
         Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
         isTestFailed = false;

@@ -24,7 +24,21 @@ public class UserRequestDeathTest extends BaseApiTest {
     @Test
     public void testCreateDeathRequestApi() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData deathBody = UserRequestData.builder()
+        UserRequestData deathBody = createDeathData();
+
+        UserRequestResponse responseBody = given()
+                .body(deathBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .extract()
+                .as(UserRequestResponse.class);
+
+        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
+    }
+
+    private UserRequestData createDeathData(){
+        return UserRequestData.builder()
                 .mode("death")
 
                 .personalFirstName("Иванвцовв")
@@ -44,15 +58,5 @@ public class UserRequestDeathTest extends BaseApiTest {
                 .death_dateOfDeath("2025-10-10")
 
                 .build();
-
-        UserRequestResponse responseBody = given()
-                .body(deathBody)
-                .when()
-                .post("/sendUserRequest")
-                .then()
-                .extract()
-                .as(UserRequestResponse.class);
-
-        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 }

@@ -23,7 +23,21 @@ public class UserRequestMarriageTest extends BaseApiTest {
     @Test
     public void testCreateMarriageRequestApi() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData marriageBody = UserRequestData.builder()
+        UserRequestData marriageBody = createMarriageData();
+
+        UserRequestResponse responseBody = given()
+                .body(marriageBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .extract()
+                .as(UserRequestResponse.class);
+
+        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
+    }
+
+    private UserRequestData createMarriageData(){
+        return UserRequestData.builder()
                 .mode("wedding")
 
                 .personalLastName("Иванов")
@@ -48,15 +62,5 @@ public class UserRequestMarriageTest extends BaseApiTest {
                 .anotherPersonPassport("CD789012")
 
                 .build();
-
-        UserRequestResponse responseBody = given()
-                .body(marriageBody)
-                .when()
-                .post("/sendUserRequest")
-                .then()
-                .extract()
-                .as(UserRequestResponse.class);
-
-        Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
     }
 }

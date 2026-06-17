@@ -5,7 +5,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import pages.MainPage;
 import java.time.Duration;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-@Slf4j
 public class AdminActionsTest extends BaseTest {
     MainPage mainPage;
     AdminRegistrationPage adminRegistrationPage;
@@ -47,8 +45,6 @@ public class AdminActionsTest extends BaseTest {
     public void testAdminCanApproveMarriageOrder() {
         String targetOrderId = "65101";
 
-        log.info("ТЕСТ одобрение заявки по айди запущен");
-
         mainPage.clickLoginAsAdmin();
 
         adminRegistrationPage.fillAdminRegistrationData(dataAdmin);
@@ -62,8 +58,6 @@ public class AdminActionsTest extends BaseTest {
                 .until(d -> adminDashboardPage.getOrderStatusById(targetOrderId).contains("Одобрена"));
 
         String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
-
-        log.info("Проверка изменения статуса заявки в конце теста");
 
         Assertions.assertTrue(actualStatusText.contains("Одобрена"),
                 "Ошибка, статус заявки не изменился на 'Одобрена'.");

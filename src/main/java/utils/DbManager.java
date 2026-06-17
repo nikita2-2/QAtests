@@ -10,6 +10,7 @@ public class DbManager {
     private static final String USER = "user";
     private static final String PASSWORD = "user_senla";
     public static Connection getConnection() throws SQLException {
+        log.info("Подключение к БД установлено");
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 

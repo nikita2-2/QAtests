@@ -20,7 +20,6 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        log.info("Переход на главную страницу ЗАГС");
         driver.get("https://user:senlatest@regoffice.senla.eu/");
         isTestFailed = true;
     }

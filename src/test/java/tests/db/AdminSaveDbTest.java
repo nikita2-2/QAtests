@@ -14,6 +14,7 @@ import utils.DbManager;
 import static io.restassured.RestAssured.given;
 
 public class AdminSaveDbTest extends BaseApiTest {
+    private final String adminName = "Петр";
 
     @Epic("Тесты БД")
     @Feature("Валидация сохранения администраторов")
@@ -22,16 +23,7 @@ public class AdminSaveDbTest extends BaseApiTest {
     public void testAdminSuccessfullySavedInDb() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
 
-        String adminName = "Петр";
-
-        AdminRequestData adminBody = AdminRequestData.builder()
-                .dateofbirth("2020-10-10")
-                .personalFirstName(adminName)
-                .personalLastName("Петров")
-                .personalMiddleName("Петрович")
-                .personalNumberOfPassport("KH123456")
-                .personalPhoneNumber("79998887766")
-                .build();
+        AdminRequestData adminBody = createAdminTestDB();
 
         AdminResponse responseBody = given()
                 .body(adminBody)
@@ -45,5 +37,16 @@ public class AdminSaveDbTest extends BaseApiTest {
         String actualAdminNameFromDb = DbManager.getAdminNameById(createdStaffId);
         Assertions.assertEquals(adminName, actualAdminNameFromDb,
                 "Имя администратора в базе данных не совпадает с отправленным по API!");
+    }
+
+    private AdminRequestData createAdminTestDB(){
+        return AdminRequestData.builder()
+                .dateofbirth("2020-10-10")
+                .personalFirstName(adminName)
+                .personalLastName("Петров")
+                .personalMiddleName("Петрович")
+                .personalNumberOfPassport("KH123456")
+                .personalPhoneNumber("79998887766")
+                .build();
     }
 }

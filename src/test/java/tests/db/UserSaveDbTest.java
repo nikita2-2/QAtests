@@ -13,6 +13,7 @@ import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UserSaveDbTest extends BaseApiTest {
+    private final String name = "Nikita";
 
     @Epic("Тесты БД")
     @Feature("Сохранение пользователя")
@@ -20,24 +21,35 @@ public class UserSaveDbTest extends BaseApiTest {
     @Test
     public void testUserSuccessfullySavedInDb() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        String testPassport = "AB123456";
-        String expectedPhone = "79991112233";
-        String name = "Nikita";
+        UserRequestData birthBody = createUserTestDB();
 
+        UserRequestResponse responseBody = given()
+                .body(birthBody)
+                .when()
+                .post("/sendUserRequest")
+                .then()
+                .extract()
+                .as(UserRequestResponse.class);
 
-        UserRequestData birthBody = UserRequestData.builder()
+        int createdUserId = responseBody.getData().getApplicantid();
+        String actualUserFromDb = DbManager.getApplicantNameById(createdUserId);
+        assertEquals(name, actualUserFromDb, "Имя в БД не совпадает с отправленным по API!");
+    }
+
+    private UserRequestData createUserTestDB(){
+        return UserRequestData.builder()
                 .mode("birth")
                 .personalFirstName(name)
                 .personalLastName("Иванов")
                 .personalMiddleName("Иванович")
-                .personalPhoneNumber(expectedPhone)
-                .personalNumberOfPassport(testPassport)
+                .personalPhoneNumber("79991112233")
+                .personalNumberOfPassport("AB123456")
 
                 .citizenLastName("Иванов")
                 .citizenFirstName("Иван")
                 .citizenMiddleName("Иванович")
                 .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport(testPassport)
+                .citizenNumberOfPassport("AB123456")
                 .citizenGender("Муж")
 
                 .dateOfMarriage("2026-10-10")
@@ -52,17 +64,5 @@ public class UserSaveDbTest extends BaseApiTest {
                 .birth_mother("Anna")
                 .birth_father("Egor")
                 .build();
-
-        UserRequestResponse responseBody = given()
-                .body(birthBody)
-                .when()
-                .post("/sendUserRequest")
-                .then()
-                .extract()
-                .as(UserRequestResponse.class);
-
-        int createdUserId = responseBody.getData().getApplicantid();
-        String actualUserFromDb = DbManager.getApplicantNameById(createdUserId);
-        assertEquals(name, actualUserFromDb, "Телефон в БД не совпадает с отправленным по API!");
     }
 }

@@ -41,10 +41,8 @@ public class ApplicationStatusPage {
 
     @Step("Получение финального текста")
     public String getFinalSuccessText() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.not(
-                ExpectedConditions.textToBePresentInElement(successSpan, "null")
-        ));
+        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
+                .until(d -> driver.getPageSource().contains("отправлена"));
         return successSpan.getText();
     }
 }

@@ -14,6 +14,11 @@ public class OrdersTable {
         return By.xpath("//td[text()='"+ orderId + "']/..//button[.//div/*[name()='svg' and @data-testid='ThumbDownIcon']]");
     }
 
+    public String getFirstOrderId() {
+        By firstRowIdLocator = By.xpath("//table/tr[1]/td[1]");
+        return driver.findElement(firstRowIdLocator).getText().trim();
+    }
+
     public OrdersTable(WebDriver driver) {
         this.driver = driver;
     }

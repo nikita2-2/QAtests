@@ -43,7 +43,6 @@ public class AdminActionsTest extends BaseTest {
     @Story("Одобрение заявки по айди")
     @Description("ТТест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
     public void testAdminCanApproveMarriageOrder() {
-        String targetOrderId = "65101";
 
         mainPage.clickLoginAsAdmin();
 
@@ -51,6 +50,9 @@ public class AdminActionsTest extends BaseTest {
         adminRegistrationPage.buttons.clickNext();
 
         adminDashboardPage.goToPage(2);
+
+        String targetOrderId = adminDashboardPage.table.getFirstOrderId();
+        System.out.println(targetOrderId);
 
         adminDashboardPage.table.approveOrderById(targetOrderId);
 

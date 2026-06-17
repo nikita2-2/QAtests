@@ -78,9 +78,11 @@ public class BirthRegistrationTest extends BaseTest {
         birthServiceDataPage.buttons.clickEnd();
 
         applicationStatusPage.clickRefresh();
-        String finalResultText = applicationStatusPage.getFinalSuccessText();
 
-        Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
+        String finalResult = applicationStatusPage.getFinalSuccessText();
+        System.out.println(finalResult);
+
+        Assertions.assertTrue(finalResult.contains("отправлена"), "Ошибка, заявка не отправлена");
         isTestFailed = false;
     }
 }

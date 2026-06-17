@@ -31,7 +31,7 @@ public class DbManager {
 
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Не удалось прочитать конфигурацию базы данных!");
+            throw new RuntimeException("Не удалось прочитать конфигурацию базы данных");
         }
     }
     public static Connection getConnection() throws SQLException {

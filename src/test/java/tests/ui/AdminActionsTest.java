@@ -52,12 +52,10 @@ public class AdminActionsTest extends BaseTest {
         adminDashboardPage.goToPage(2);
 
         String targetOrderId = adminDashboardPage.table.getFirstOrderId();
-        System.out.println(targetOrderId);
 
         adminDashboardPage.table.approveOrderById(targetOrderId);
 
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(d -> adminDashboardPage.getOrderStatusById(targetOrderId).contains("Одобрена"));
+        adminDashboardPage.waitForAppruved(targetOrderId);
 
         String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
 

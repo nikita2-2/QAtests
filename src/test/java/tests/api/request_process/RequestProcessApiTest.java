@@ -15,6 +15,8 @@ import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
 
 public class RequestProcessApiTest extends BaseApiTest {
+    int testAppId = 11111;
+    int testStaffId = 72703;
 
     @Epic("АПИ ТЕСТЫ")
     @Feature("Работа с заявками")
@@ -28,7 +30,7 @@ public class RequestProcessApiTest extends BaseApiTest {
 
         RequestProcessData processBody = RequestProcessData.builder()
                 .applId(dynamicId)
-                .staffid(72703)
+                .staffid(testStaffId)
                 .action("approved")
                 .build();
 
@@ -54,7 +56,7 @@ public class RequestProcessApiTest extends BaseApiTest {
 
         RequestProcessData processBody = RequestProcessData.builder()
                 .applId(dynamicId)
-                .staffid(36018)
+                .staffid(testStaffId)
                 .action("rejected")
                 .build();
 
@@ -75,8 +77,8 @@ public class RequestProcessApiTest extends BaseApiTest {
     @Test
     public void testProcessApplicationWithWrongAuth() {
         RequestProcessData processBody = RequestProcessData.builder()
-                .applId(11111)
-                .staffid(72703)
+                .applId(testAppId)
+                .staffid(testStaffId)
                 .action("approved")
                 .build();
 
@@ -97,8 +99,8 @@ public class RequestProcessApiTest extends BaseApiTest {
     @Test
     public void testProcessApplicationWithUnsupportedAction() {
         RequestProcessData invalidBody = RequestProcessData.builder()
-                .applId(11111)
-                .staffid(72703)
+                .applId(testAppId)
+                .staffid(testStaffId)
                 .action("delete")
                 .build();
 
@@ -118,8 +120,8 @@ public class RequestProcessApiTest extends BaseApiTest {
     @Test
     public void testProcessApplicationWithInvalidData() {
         RequestProcessData invalidBody = RequestProcessData.builder()
-                .applId(11111)
-                .staffid(72703)
+                .applId(testAppId)
+                .staffid(testStaffId)
                 .build();
 
         given()

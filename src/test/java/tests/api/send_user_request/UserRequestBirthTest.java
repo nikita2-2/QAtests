@@ -31,6 +31,7 @@ public class UserRequestBirthTest extends BaseApiTest {
 
         Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
         }
+
     @Test
     @Epic("АПИ ТЕСТЫ")
     @Story("Ошибка авторизации для заявки рождения")

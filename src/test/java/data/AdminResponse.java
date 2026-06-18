@@ -10,6 +10,6 @@ public class AdminResponse {
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class DataBlock {
-        private Integer staffid; // Наш заветный ID админа!
+        private Integer staffid;
     }
 }

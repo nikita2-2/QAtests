@@ -10,6 +10,8 @@ public class Specifications {
 
     public static RequestSpecification requestSpec() {
         return new RequestSpecBuilder()
+                .setBaseUri("https://regoffice.senla.eu")
+                .setAuth(io.restassured.RestAssured.basic("user", "senlatest"))
                 .setContentType(ContentType.JSON)
                 .build();
     }

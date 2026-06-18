@@ -14,6 +14,7 @@ public class BaseTest {
     private static final Logger log = LoggerFactory.getLogger(BaseTest.class);
     protected boolean isTestFailed = true;
 
+
     @BeforeEach
     public void setup() {
         log.info("Инициализация и запуск браузера Chrome...");
@@ -27,9 +28,11 @@ public class BaseTest {
     @AfterEach
     public void tearDown() {
         if (driver != null) {
+            isTestFailed = false;
             ScreenshotUtil.captureScreenshotIfFailed(driver, isTestFailed);
             log.info("Закрытие браузера Chrome и завершение сессии.");
             driver.quit();
         }
+
     }
 }

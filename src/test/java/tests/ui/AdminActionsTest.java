@@ -61,6 +61,5 @@ public class AdminActionsTest extends BaseTest {
 
         Assertions.assertTrue(actualStatusText.contains("Одобрена"),
                 "Ошибка, статус заявки не изменился на 'Одобрена'.");
-        isTestFailed = false;
     }
 }

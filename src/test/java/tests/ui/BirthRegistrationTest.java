@@ -1,23 +1,26 @@
-package tests;
+package tests.ui;
 
+import data.BirthData;
 import data.CitizenData;
-import data.DeathData;
 import data.UserData;
+import io.qameta.allure.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.*;
 
-public class DeathRegistrationTest extends BaseTest {
+@Slf4j
+public class BirthRegistrationTest extends BaseTest {
     MainPage mainPage;
     UserRegistrationPage userRegistrationPage;
     ServiceSelectionPage serviceSelectionPage;
     CitizenDataPage citizenDataPage;
-    DeathServiceDataPage deathServiceDataPage;
+    BirthServiceDataPage birthServiceDataPage;
     ApplicationStatusPage applicationStatusPage;
     UserData dataUser;
     CitizenData dataCitizen;
-    DeathData deathData;
+    BirthData birthData;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +28,7 @@ public class DeathRegistrationTest extends BaseTest {
         userRegistrationPage = new UserRegistrationPage(driver);
         serviceSelectionPage = new ServiceSelectionPage(driver);
         citizenDataPage = new CitizenDataPage(driver);
-        deathServiceDataPage = new DeathServiceDataPage(driver);
+        birthServiceDataPage = new BirthServiceDataPage(driver);
         applicationStatusPage = new ApplicationStatusPage(driver);
 
         dataUser = UserData.builder()
@@ -47,29 +50,37 @@ public class DeathRegistrationTest extends BaseTest {
                 .address("Брест, ул. Советская, 5")
                 .build();
 
-        deathData = DeathData.builder()
-                .deathDate("10102025")
-                .deathPlace("город Минск улица Казинца")
+        birthData = BirthData.builder()
+                .birthPlace("Гродно")
+                .motherName("Смирнова Анна Игоревна")
+                .fatherName("Смирнов Олег Петрович")
+                .grandmotherName("Смирнова Мария Ивановна")
+                .grandfatherName("Смирнов Петр Сергеевич")
                 .build();
     }
 
     @Test
-    public void testDeathRegistrationE2E() {
+    @Epic("Регистрация заявлений ЗАГС")
+    @Feature("Регистрация рождения")
+    @Story("Успешная подача заявки на рождение ребенка")
+    @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации рождения")
+    public void testBirthRegistrationE2E() {
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();
 
-        serviceSelectionPage.selectDeathRegistration();
+        serviceSelectionPage.selectBirthRegistration();
 
         citizenDataPage.fillCitizenData(dataCitizen);
         citizenDataPage.buttons.clickNext();
 
-        deathServiceDataPage.fillDeathDetails(deathData);
-        deathServiceDataPage.buttons.clickEnd();
+        birthServiceDataPage.fillBirthDetails(birthData);
+        birthServiceDataPage.buttons.clickEnd();
 
         applicationStatusPage.clickRefresh();
-        String finalResultText = applicationStatusPage.getFinalSuccessText();
 
-        Assertions.assertTrue(finalResultText.contains("отправлена на рассмотрение."), "Ошибка, заявка не отправлена");
+        String finalResult = applicationStatusPage.getFinalSuccessText();
+
+        Assertions.assertTrue(finalResult.contains("отправлена"), "Ошибка, заявка не отправлена");
     }
 }

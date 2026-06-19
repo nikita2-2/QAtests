@@ -1,6 +1,7 @@
 package pages;
 
 import elements.NavigationButtons;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,11 +39,10 @@ public class ApplicationStatusPage {
         createNewOrderBtn.click();
     }
 
+    @Step("Получение финального текста")
     public String getFinalSuccessText() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.not(
-                ExpectedConditions.textToBePresentInElement(successSpan, "null")
-        ));
+        new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(5))
+                .until(d -> driver.getPageSource().contains("отправлена"));
         return successSpan.getText();
     }
 }

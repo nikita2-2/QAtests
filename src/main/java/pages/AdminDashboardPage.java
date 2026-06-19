@@ -2,11 +2,14 @@ package pages;
 
 import elements.NavigationButtons;
 import elements.OrdersTable;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class AdminDashboardPage {
     private final  WebDriver driver;
@@ -31,8 +34,14 @@ public class AdminDashboardPage {
         return driver.findElement(statusLocator(orderId)).getText();
     }
 
+    @Step("Переход на {pageNumber} страницу")
     public void goToPage(int pageNumber) {
         By pageLocator = By.xpath("//button[text()='" + pageNumber + "']");
         driver.findElement(pageLocator).click();
+    }
+
+    public void waitForAppruved(String targetOrderId) {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(d -> getOrderStatusById(targetOrderId).contains("Одобрена"));
     }
 }

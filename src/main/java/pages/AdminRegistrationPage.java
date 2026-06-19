@@ -1,7 +1,7 @@
 package pages;
 
-
 import elements.NavigationButtons;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,6 +35,7 @@ public class AdminRegistrationPage {
     @FindBy(xpath = "(//div[@role='dialog']//input)[6]")
     private WebElement birthDateInput;
 
+    @Step("Заполнение данных админа")
     public void fillAdminRegistrationData(data.AdminData admin) {
         lastNameInput.sendKeys(admin.getLastName());
         firstNameInput.sendKeys(admin.getFirstName());

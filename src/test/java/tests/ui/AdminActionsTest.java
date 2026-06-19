@@ -1,13 +1,18 @@
-package tests;
+package tests.ui;
 
 import data.AdminData;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.AdminDashboardPage;
 import pages.AdminRegistrationPage;
 import pages.MainPage;
-
+import java.time.Duration;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminActionsTest extends BaseTest {
     MainPage mainPage;
@@ -33,15 +38,24 @@ public class AdminActionsTest extends BaseTest {
     }
 
     @Test
+    @Epic("Панель админа ЗАГС")
+    @Feature("Администрирование заявок")
+    @Story("Одобрение заявки по айди")
+    @Description("ТТест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
     public void testAdminCanApproveMarriageOrder() {
-        String targetOrderId = "65279";
 
         mainPage.clickLoginAsAdmin();
 
         adminRegistrationPage.fillAdminRegistrationData(dataAdmin);
         adminRegistrationPage.buttons.clickNext();
 
+        adminDashboardPage.goToPage(2);
+
+        String targetOrderId = adminDashboardPage.table.getFirstOrderId();
+
         adminDashboardPage.table.approveOrderById(targetOrderId);
+
+        adminDashboardPage.waitForAppruved(targetOrderId);
 
         String actualStatusText = adminDashboardPage.getOrderStatusById(targetOrderId);
 

@@ -66,8 +66,8 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Test
     public void testGetApplicationStatusWithWrongAuth() {
         given()
-                .baseUri("https://regoffice.senla.eu")
-                .auth().basic("user", "WRONG_PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .pathParam("applicationId", 11111)
                 .when()
                 .get("/getApplStatus/{applicationId}")

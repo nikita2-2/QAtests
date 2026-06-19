@@ -35,11 +35,7 @@ public class BirthRegistrationSteps extends BaseApiTest {
                 .statusCode(200)
                 .extract()
                 .as(UserRequestResponse.class);
-    }
-
-    @Тогда("Сервер успешно обрабатывает запрос")
-    public void verifyServerResponse() {
-        log.info("Сервер вернул успешный статус ответа!");
+        log.info("Сервер успешно обработал запрос и вернул статус 200!");
     }
 
     @Допустим("в ответе присутствует не пустой ID новой заявки")

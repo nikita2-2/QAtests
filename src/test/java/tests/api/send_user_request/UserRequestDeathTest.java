@@ -43,7 +43,8 @@ public class UserRequestDeathTest extends BaseApiTest {
     public void testCreateDeathRequestWithWrongAuth() {
         UserRequestData birthBody = createDeathData();
         given()
-                .auth().basic("user", "PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(birthBody)
                 .when()

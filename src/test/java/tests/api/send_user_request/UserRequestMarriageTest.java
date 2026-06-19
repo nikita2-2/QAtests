@@ -42,7 +42,8 @@ public class UserRequestMarriageTest extends BaseApiTest {
     public void testCreateMarriageRequestWithWrongAuth() {
         UserRequestData birthBody = createMarriageData();
         given()
-                .auth().basic("user", "PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(birthBody)
                 .when()

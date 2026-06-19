@@ -39,7 +39,8 @@ public class UserRequestBirthTest extends BaseApiTest {
     public void testCreateBirthRequestWithWrongAuth() {
         UserRequestData birthBody = createValidBirthUserData("Ivann");
         given()
-                .auth().basic("user", "PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(birthBody)
                 .when()

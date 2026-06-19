@@ -80,8 +80,8 @@ public class RequestProcessApiTest extends BaseApiTest {
                 .build();
 
         given()
-                .baseUri("https://regoffice.senla.eu")
-                .auth().basic("user", "WRONG_PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(processBody)
                 .when()

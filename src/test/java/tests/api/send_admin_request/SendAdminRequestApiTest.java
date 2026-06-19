@@ -12,6 +12,8 @@ import tests.api.BaseApiTest;
 import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static data.TestDataFactory.createAdminData;
+
 
 public class SendAdminRequestApiTest extends BaseApiTest {
 
@@ -65,6 +67,7 @@ public class SendAdminRequestApiTest extends BaseApiTest {
         AdminRequestData adminBody = createAdminData();
 
         given()
+                .baseUri("https://regoffice.senla.eu")
                 .auth().basic("user", "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(adminBody)
@@ -89,16 +92,5 @@ public class SendAdminRequestApiTest extends BaseApiTest {
                 .post("/sendAdminRequest/")
                 .then()
                 .statusCode(400);
-    }
-
-    private AdminRequestData createAdminData(){
-        return AdminRequestData.builder()
-                .dateofbirth("1985-01-01")
-                .personalFirstName("smdfsk")
-                .personalLastName("smdfsk")
-                .personalMiddleName("smdfsk")
-                .personalNumberOfPassport("ФИ123456")
-                .personalPhoneNumber("7999123445")
-                .build();
     }
 }

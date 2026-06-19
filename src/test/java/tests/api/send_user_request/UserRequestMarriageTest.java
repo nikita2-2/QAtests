@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
+
+import static data.TestDataFactory.createMarriageData;
 import static io.restassured.RestAssured.given;
 
 public class UserRequestMarriageTest extends BaseApiTest {
@@ -61,33 +63,5 @@ public class UserRequestMarriageTest extends BaseApiTest {
                 .post("/sendUserRequest")
                 .then()
                 .statusCode(400);
-    }
-
-    private UserRequestData createMarriageData(){
-        return UserRequestData.builder()
-                .mode("wedding")
-
-                .personalLastName("Иванов")
-                .personalFirstName("Иванвцовв")
-                .personalMiddleName("Иванович")
-                .personalPhoneNumber("79999856985")
-                .personalNumberOfPassport("ММ466666")
-
-                .citizenLastName("Петрова")
-                .citizenFirstName("Иван")
-                .citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport("AB123456")
-                .citizenGender("М")
-
-                .dateOfMarriage("2026-10-10")
-                .newLastName("")
-                .anotherPersonLastName("Сидорова")
-                .anotherPersonFirstName("Мария")
-                .anotherPersonMiddleName("Алексеевна")
-                .birth_of_anotoherPerson("1999-01-01")
-                .anotherPersonPassport("CD789012")
-
-                .build();
     }
 }

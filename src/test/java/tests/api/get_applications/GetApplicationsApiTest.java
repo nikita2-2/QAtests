@@ -38,6 +38,7 @@ public class GetApplicationsApiTest extends BaseApiTest {
     @Test
     public void testGetApplicationsWithWrongAuth() {
         given()
+                .baseUri("https://regoffice.senla.eu")
                 .auth().basic("user", "WRONG_PASSWORD")
                 .queryParam("page", 1)
                 .queryParam("size", 10)

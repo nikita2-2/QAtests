@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
 import utils.DbManager;
+
+import static data.TestDataFactory.createValidBirthUserData;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +23,7 @@ public class UserSaveDbTest extends BaseApiTest {
     @Test
     public void testUserSuccessfullySavedInDb() {
         Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData birthBody = createUserTestDB();
+        UserRequestData birthBody = createValidBirthUserData(name);
 
         UserRequestResponse responseBody = given()
                 .body(birthBody)
@@ -38,37 +40,6 @@ public class UserSaveDbTest extends BaseApiTest {
         assertEquals(name, actualUserFromDb, "Имя в БД не совпадает с отправленным по API!");
         if (createdUserId > 0 && createdApplicationId > 0) {
             DbManager.deleteApplicantWithApplication(createdUserId, createdApplicationId);
-
         }
-    }
-
-    private UserRequestData createUserTestDB(){
-        return UserRequestData.builder()
-                .mode("birth")
-                .personalFirstName(name)
-                .personalLastName("Иванов")
-                .personalMiddleName("Иванович")
-                .personalPhoneNumber("79991112233")
-                .personalNumberOfPassport("AB123456")
-
-                .citizenLastName("Иванов")
-                .citizenFirstName("Иван")
-                .citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport("AB123456")
-                .citizenGender("Муж")
-
-                .dateOfMarriage("2026-10-10")
-                .newLastName("Иванова")
-                .anotherPersonLastName("Сидорова")
-                .anotherPersonFirstName("Мария")
-                .anotherPersonMiddleName("Алексеевна")
-                .birth_of_anotoherPerson("15051997")
-                .anotherPersonPassport("CD789012")
-
-                .birth_place("Москва, ул Длинная 4")
-                .birth_mother("Anna")
-                .birth_father("Egor")
-                .build();
     }
 }

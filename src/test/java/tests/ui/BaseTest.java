@@ -4,21 +4,48 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.ScreenshotUtil;
 
 public class BaseTest {
-    protected static WebDriver driver;
+
+    protected WebDriver driver;
     private static final Logger log = LoggerFactory.getLogger(BaseTest.class);
     protected boolean isTestFailed = true;
 
+    public void initDriver(String browserName, String browserVersion) throws MalformedURLException {
+        log.info("Инициализация браузера {} версии {}...", browserName, browserVersion);
+        String mode = System.getenv().getOrDefault("execution_mode", "LOCAL");
 
-    @BeforeEach
-    public void setup() {
-        log.info("Инициализация и запуск браузера Chrome...");
-        driver = new ChromeDriver();
+        if ("SELENOID".equalsIgnoreCase(mode)) {
+            log.info("Запуск в Docker-контейнере через Selenoid");
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(browserName);
+            capabilities.setVersion(browserVersion);
+
+            capabilities.setCapability("selenoid:options", java.util.Map.of(
+                    "enableVNC", true
+            ));
+
+            driver = new RemoteWebDriver(
+                    new URL("http://localhost:4444/wd/hub"),
+                    capabilities
+            );
+        } else {
+            log.info("Запуск локально");
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+        }
+
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://user:senlatest@regoffice.senla.eu/");

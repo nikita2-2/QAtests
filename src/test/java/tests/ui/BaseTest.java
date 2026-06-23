@@ -54,7 +54,7 @@ public class BaseTest {
     }
 
     public static java.util.stream.Stream<String> provideBrowsers() {
-        String browsers = System.getenv("browsers.list");
+        String browsers = System.getenv("BROWSERS_LIST");
         if (browsers == null) {
             browsers = System.getProperty("browsers.list", "chrome:120.0");
         }

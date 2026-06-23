@@ -54,17 +54,17 @@ public class DeathRegistrationTest extends BaseTest {
                 .build();
     }
 
-    @ParameterizedTest(name = "Регистрация смерти в {0} {1}")
-    @CsvSource({
-            "chrome, 120.0",
-            "chrome, 110.0",
-            "MicrosoftEdge, 114.0"
-    })
+    @org.junit.jupiter.params.ParameterizedTest(name = "Тест в {0}")
+    @org.junit.jupiter.params.provider.MethodSource("tests.ui.BaseTest#provideBrowsers")
     @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация смерти")
     @Story("Успешная подача заявки на регистрацию смерти")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации смерти")
-    public void testDeathRegistrationE2E(String browser, String version) throws MalformedURLException {
+    public void testDeathRegistrationE2E(String browserAndVersion) throws MalformedURLException {
+        String[] parts = browserAndVersion.split(":");
+        String browser = parts[0];
+        String version = parts[1];
+
         initDriver(browser, version);
 
         mainPage = new MainPage(driver);

@@ -36,17 +36,17 @@ public class AdminActionsTest extends BaseTest {
                 .build();
     }
 
-    @ParameterizedTest(name = "Тест в {0} {1}")
-    @CsvSource({
-            "chrome, 120.0",
-            "chrome, 110.0",
-            "MicrosoftEdge, 114.0"
-    })
+    @org.junit.jupiter.params.ParameterizedTest(name = "Тест в {0}")
+    @org.junit.jupiter.params.provider.MethodSource("tests.ui.BaseTest#provideBrowsers")
     @Epic("Панель админа ЗАГС")
     @Feature("Администрирование заявок")
     @Story("Одобрение заявки по айди")
     @Description("Тест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
-    public void testAdminCanApproveMarriageOrder(String browser, String version) throws MalformedURLException {
+    public void testAdminCanApproveMarriageOrder(String browserAndVersion) throws MalformedURLException {
+        String[] parts = browserAndVersion.split(":");
+        String browser = parts[0];
+        String version = parts[1];
+
         initDriver(browser, version);
 
         mainPage = new MainPage(driver);

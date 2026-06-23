@@ -47,11 +47,15 @@ public class BaseTest {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         }
-
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get("https://user:senlatest@regoffice.senla.eu/");
         isTestFailed = true;
+    }
+
+    public static java.util.stream.Stream<String> provideBrowsers() {
+        String browsers = System.getProperty("browsers.list", "chrome:120.0");
+        return java.util.stream.Stream.of(browsers.split(","));
     }
 
     @AfterEach

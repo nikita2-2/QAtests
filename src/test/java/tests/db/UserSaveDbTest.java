@@ -22,7 +22,6 @@ public class UserSaveDbTest extends BaseApiTest {
     @Description("Тест отправляет API-запрос на создание гражданина и проверяет его корректное сохранение в БД")
     @Test
     public void testUserSuccessfullySavedInDb() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData birthBody = createValidBirthUserData(name);
 
         UserRequestResponse responseBody = given()

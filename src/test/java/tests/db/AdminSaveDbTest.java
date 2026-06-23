@@ -22,7 +22,6 @@ public class AdminSaveDbTest extends BaseApiTest {
     @Description("Тест создает админа по API и проверяет его сохранение в таблице staff через JDBC")
     @Test
     public void testAdminSuccessfullySavedInDb() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
 
         AdminRequestData adminBody = createValidAdminData(adminName);
 

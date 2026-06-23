@@ -33,11 +33,13 @@ public class BaseTest {
             capabilities.setVersion(browserVersion);
 
             capabilities.setCapability("selenoid:options", java.util.Map.of(
-                    "enableVNC", true
+                    "enableVNC", true, "screenResolution", "1920x1080x24"
             ));
+            String selenoidHost = System.getenv().getOrDefault("SELENOID_HOST", "localhost");
+            String selenoidUrl = "http://" + selenoidHost + ":4444/wd/hub";
 
             driver = new RemoteWebDriver(
-                    new URL("http://192.168.0"),
+                    new URL(selenoidUrl),
                     capabilities
             );
         } else {

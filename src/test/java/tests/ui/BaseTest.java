@@ -37,7 +37,7 @@ public class BaseTest {
             ));
 
             driver = new RemoteWebDriver(
-                    new URL("http://docker.internal"),
+                    new URL("http://192.168.0"),
                     capabilities
             );
         } else {

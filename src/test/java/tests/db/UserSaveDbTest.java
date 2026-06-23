@@ -38,8 +38,7 @@ public class UserSaveDbTest extends BaseApiTest {
 
         String actualUserFromDb = DbManager.getApplicantNameById(createdUserId);
         assertEquals(name, actualUserFromDb, "Имя в БД не совпадает с отправленным по API!");
-        if (createdUserId > 0 && createdApplicationId > 0) {
-            DbManager.deleteApplicantWithApplication(createdUserId, createdApplicationId);
-        }
+        DbManager.deleteApplicantWithApplication(createdUserId, createdApplicationId);
+
     }
 }

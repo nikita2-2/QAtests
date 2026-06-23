@@ -10,7 +10,11 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.*;
+
+import java.net.MalformedURLException;
 
 public class MarriageRegistrationTest extends BaseTest {
     MainPage mainPage;
@@ -25,13 +29,6 @@ public class MarriageRegistrationTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        mainPage = new MainPage(driver);
-        userRegistrationPage = new UserRegistrationPage(driver);
-        serviceSelectionPage = new ServiceSelectionPage(driver);
-        citizenDataPage = new CitizenDataPage(driver);
-        marriageServiceDataPage = new MarriageServiceDataPage(driver);
-        applicationStatusPage = new ApplicationStatusPage(driver);
-
         dataUser = UserData.builder()
                 .lastName("Иванов")
                 .firstName("Иван")
@@ -62,12 +59,26 @@ public class MarriageRegistrationTest extends BaseTest {
                 .build();
     }
 
-    @Test
+    @ParameterizedTest(name = "Регистрация брака в {0} {1}")
+    @CsvSource({
+            "chrome, 120.0",
+            "chrome, 110.0",
+            "MicrosoftEdge, 114.0"
+    })
     @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация брака")
     @Story("Успешная подача заявки на регистрацию брака")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
-    public void testSuccessfulMarriageRegistrationE2E() {
+    public void testSuccessfulMarriageRegistrationE2E(String browser, String version) throws MalformedURLException {
+        initDriver(browser, version);
+
+        mainPage = new MainPage(driver);
+        userRegistrationPage = new UserRegistrationPage(driver);
+        serviceSelectionPage = new ServiceSelectionPage(driver);
+        citizenDataPage = new CitizenDataPage(driver);
+        marriageServiceDataPage = new MarriageServiceDataPage(driver);
+        applicationStatusPage = new ApplicationStatusPage(driver);
+
         mainPage.clickLoginAsUser();
 
         userRegistrationPage.fillRegistrationData(dataUser);

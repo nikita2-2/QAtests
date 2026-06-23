@@ -38,7 +38,7 @@ public class BirthRegistrationSteps extends BaseApiTest {
         log.info("Сервер успешно обработал запрос и вернул статус 200!");
     }
 
-    @Допустим("в ответе присутствует не пустой ID новой заявки")
+    @Тогда("в ответе присутствует не пустой ID новой заявки")
     public void verifyApplicationId() {
         Assertions.assertNotNull(responseBody.getData().getApplicationid(), "ID заявки пустой!");
         log.info("ID заявки: " + responseBody.getData().getApplicationid());

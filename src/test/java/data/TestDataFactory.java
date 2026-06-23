@@ -97,7 +97,7 @@ public class TestDataFactory {
     public static AdminRequestData createValidAdminData(String adminName) {
         return AdminRequestData.builder()
                 .dateofbirth("2020-10-10")
-                .personalFirstName(adminName) // Передаем имя динамически
+                .personalFirstName(adminName)
                 .personalLastName("Петров")
                 .personalMiddleName("Петрович")
                 .personalNumberOfPassport("KH123456")

@@ -19,7 +19,6 @@ public class UserRequestBirthTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию рождения и возращается ее номер")
     @Test
     public void testCreateBirthRequestApi() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData birthBody = createValidBirthUserData("Ivann");
 
         UserRequestResponse responseBody = given()

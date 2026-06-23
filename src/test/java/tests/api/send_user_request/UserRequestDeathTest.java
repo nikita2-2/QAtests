@@ -23,7 +23,6 @@ public class UserRequestDeathTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию смерти и возращается ее номер")
     @Test
     public void testCreateDeathRequestApi() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData deathBody = createDeathData();
 
         UserRequestResponse responseBody = given()

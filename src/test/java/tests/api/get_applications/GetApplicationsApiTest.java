@@ -19,8 +19,6 @@ public class GetApplicationsApiTest extends BaseApiTest {
     @Description("Тест запрашивает общий список заявок без параметров")
     @Test
     public void testGetApplications() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-
         GetApplicationsResponse responseBody = given()
                 .when()
                 .get("/getApplications")

@@ -22,7 +22,6 @@ public class UserRequestMarriageTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию брака и возращается ее номер")
     @Test
     public void testCreateMarriageRequestApi() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData marriageBody = createMarriageData();
 
         UserRequestResponse responseBody = given()

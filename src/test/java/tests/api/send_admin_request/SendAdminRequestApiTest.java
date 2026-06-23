@@ -43,7 +43,6 @@ public class SendAdminRequestApiTest extends BaseApiTest {
     @Description("Тест отправляет валидный JSON на /sendAdminRequest/ и проверяет айди админа")
     @Test
     public void testCreateAdminUserSuccessfullyCheckId() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         AdminRequestData adminBody = createAdminData();
 
         AdminResponse responseBody = given()

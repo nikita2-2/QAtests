@@ -22,7 +22,6 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Description("Тест проверяет получение заявки по айди")
     @Test
     public void testGetApplicationStatusSuccessfully() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData birthBody = createValidBirthUserData("Петя");
 
         UserRequestResponse responseBody = given()

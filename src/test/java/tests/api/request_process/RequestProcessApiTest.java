@@ -47,8 +47,6 @@ public class RequestProcessApiTest extends BaseApiTest {
     @Description("Тест проверяет отклонение заявки по динамическому айди заявки и админа")
     @Test
     public void testProcessApplicationNotSuccessfully(){
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-
         int dynamicId = createFreshApplicationId();
 
         RequestProcessData processBody = RequestProcessData.builder()

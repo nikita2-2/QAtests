@@ -19,9 +19,9 @@ public class DbManager {
 
     static {
         Properties properties = new Properties();
-        try (InputStream input = DbManager.class.getClassLoader().getResourceAsStream("database.properties")) {
+        try (InputStream input = DbManager.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
-                throw new RuntimeException("файл database.properties не найден");
+                throw new RuntimeException("файл config.properties не найден");
             }
             properties.load(input);
 

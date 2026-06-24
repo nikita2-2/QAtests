@@ -12,6 +12,8 @@ import tests.api.BaseApiTest;
 import tests.api.Specifications;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static data.TestDataFactory.createAdminData;
+
 
 public class SendAdminRequestApiTest extends BaseApiTest {
 
@@ -41,7 +43,6 @@ public class SendAdminRequestApiTest extends BaseApiTest {
     @Description("Тест отправляет валидный JSON на /sendAdminRequest/ и проверяет айди админа")
     @Test
     public void testCreateAdminUserSuccessfullyCheckId() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         AdminRequestData adminBody = createAdminData();
 
         AdminResponse responseBody = given()
@@ -65,7 +66,8 @@ public class SendAdminRequestApiTest extends BaseApiTest {
         AdminRequestData adminBody = createAdminData();
 
         given()
-                .auth().basic("user", "WRONG_PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(adminBody)
                 .when()
@@ -89,16 +91,5 @@ public class SendAdminRequestApiTest extends BaseApiTest {
                 .post("/sendAdminRequest/")
                 .then()
                 .statusCode(400);
-    }
-
-    private AdminRequestData createAdminData(){
-        return AdminRequestData.builder()
-                .dateofbirth("1985-01-01")
-                .personalFirstName("smdfsk")
-                .personalLastName("smdfsk")
-                .personalMiddleName("smdfsk")
-                .personalNumberOfPassport("ФИ123456")
-                .personalPhoneNumber("7999123445")
-                .build();
     }
 }

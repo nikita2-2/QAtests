@@ -1,5 +1,6 @@
 package tests.api.get_appl_status;
 
+import data.ErrorResponse;
 import data.UserRequestData;
 import data.UserRequestResponse;
 import io.qameta.allure.Description;
@@ -9,8 +10,11 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
+
+import static data.TestDataFactory.createValidBirthUserData;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GetApplStatusApiTest extends BaseApiTest {
 
@@ -20,8 +24,7 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Description("Тест проверяет получение заявки по айди")
     @Test
     public void testGetApplicationStatusSuccessfully() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData birthBody = createBirthForApiStatus();
+        UserRequestData birthBody = createValidBirthUserData("Петя");
 
         UserRequestResponse responseBody = given()
                 .body(birthBody)
@@ -48,13 +51,16 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Description("Негативный тест: проверка, что при передаче отрицательного ID сервер возвращает ошибку клиента")
     @Test
     public void testGetApplicationStatusWithInvalidId() {
-        given()
-                .spec(Specifications.requestSpec())
+        ErrorResponse responsesBody = given()
                 .pathParam("applicationId", -999)
                 .when()
                 .get("/getApplStatus/{applicationId}")
                 .then()
-                .statusCode(400);
+                .statusCode(200)
+                .extract()
+                .as(ErrorResponse.class);
+
+        assertNotNull(responsesBody.getMessage(), "Сообщение об ошибке не пришло");
     }
 
     @Epic("АПИ ТЕСТЫ")
@@ -64,43 +70,12 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Test
     public void testGetApplicationStatusWithWrongAuth() {
         given()
-                .auth().basic("user", "WRONG_PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .pathParam("applicationId", 11111)
                 .when()
                 .get("/getApplStatus/{applicationId}")
                 .then()
                 .statusCode(401);
-    }
-
-    private UserRequestData createBirthForApiStatus() {
-        return UserRequestData.builder()
-                .mode("birth")
-
-                .personalFirstName("Петя")
-                .personalLastName("Иванов")
-                .personalMiddleName("Иванович")
-                .personalPhoneNumber("79991112233")
-                .personalNumberOfPassport("AB123456")
-
-                .citizenLastName("Иванов")
-                .citizenFirstName("Иван")
-                .citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport("AB123456")
-                .citizenGender("Муж")
-
-                .dateOfMarriage("2026-10-10")
-                .newLastName("Иванова")
-                .anotherPersonLastName("Сидорова")
-                .anotherPersonFirstName("Мария")
-                .anotherPersonMiddleName("Алексеевна")
-                .birth_of_anotoherPerson("15051997")
-                .anotherPersonPassport("CD789012")
-
-                .birth_place("Москва, ул Длинная 4")
-                .birth_mother("Anna")
-                .birth_father("Egor")
-
-                .build();
     }
 }

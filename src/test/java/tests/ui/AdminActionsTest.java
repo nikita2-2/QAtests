@@ -8,9 +8,13 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.AdminDashboardPage;
 import pages.AdminRegistrationPage;
 import pages.MainPage;
+
+import java.net.MalformedURLException;
 import java.time.Duration;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,11 +26,6 @@ public class AdminActionsTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        mainPage = new MainPage(driver);
-
-        adminRegistrationPage = new AdminRegistrationPage(driver);
-        adminDashboardPage = new AdminDashboardPage(driver);
-
         dataAdmin = AdminData.builder()
                 .lastName("Петров")
                 .firstName("Петр")
@@ -37,12 +36,23 @@ public class AdminActionsTest extends BaseTest {
                 .build();
     }
 
-    @Test
+    @org.junit.jupiter.params.ParameterizedTest(name = "Тест в {0}")
+    @org.junit.jupiter.params.provider.MethodSource("tests.ui.BaseTest#provideBrowsers")
     @Epic("Панель админа ЗАГС")
     @Feature("Администрирование заявок")
     @Story("Одобрение заявки по айди")
-    @Description("ТТест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
-    public void testAdminCanApproveMarriageOrder() {
+    @Description("Тест проверяет авторизацию админа, поиск заявки в таблице по айди и смену статуса на 'Одобрена'")
+    public void testAdminCanApproveMarriageOrder(String browserAndVersion) throws MalformedURLException {
+        String[] parts = browserAndVersion.split(":");
+        String browser = parts[0];
+        String version = parts[1];
+
+        initDriver(browser, version);
+
+        mainPage = new MainPage(driver);
+
+        adminRegistrationPage = new AdminRegistrationPage(driver);
+        adminDashboardPage = new AdminDashboardPage(driver);
 
         mainPage.clickLoginAsAdmin();
 

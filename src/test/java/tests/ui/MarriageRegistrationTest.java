@@ -10,7 +10,11 @@ import io.qameta.allure.Story;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.*;
+
+import java.net.MalformedURLException;
 
 public class MarriageRegistrationTest extends BaseTest {
     MainPage mainPage;
@@ -25,13 +29,6 @@ public class MarriageRegistrationTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        mainPage = new MainPage(driver);
-        userRegistrationPage = new UserRegistrationPage(driver);
-        serviceSelectionPage = new ServiceSelectionPage(driver);
-        citizenDataPage = new CitizenDataPage(driver);
-        marriageServiceDataPage = new MarriageServiceDataPage(driver);
-        applicationStatusPage = new ApplicationStatusPage(driver);
-
         dataUser = UserData.builder()
                 .lastName("Иванов")
                 .firstName("Иван")
@@ -62,12 +59,26 @@ public class MarriageRegistrationTest extends BaseTest {
                 .build();
     }
 
-    @Test
+    @org.junit.jupiter.params.ParameterizedTest(name = "Тест в {0}")
+    @org.junit.jupiter.params.provider.MethodSource("tests.ui.BaseTest#provideBrowsers")
     @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация брака")
     @Story("Успешная подача заявки на регистрацию брака")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации брака")
-    public void testSuccessfulMarriageRegistrationE2E() {
+    public void testSuccessfulMarriageRegistrationE2E(String browserAndVersion) throws MalformedURLException {
+        String[] parts = browserAndVersion.split(":");
+        String browser = parts[0];
+        String version = parts[1];
+
+        initDriver(browser, version);
+
+        mainPage = new MainPage(driver);
+        userRegistrationPage = new UserRegistrationPage(driver);
+        serviceSelectionPage = new ServiceSelectionPage(driver);
+        citizenDataPage = new CitizenDataPage(driver);
+        marriageServiceDataPage = new MarriageServiceDataPage(driver);
+        applicationStatusPage = new ApplicationStatusPage(driver);
+
         mainPage.clickLoginAsUser();
 
         userRegistrationPage.fillRegistrationData(dataUser);

@@ -1,9 +1,6 @@
 package tests.api.request_process;
 
-import data.ProcessResponse;
-import data.RequestProcessData;
-import data.UserRequestData;
-import data.UserRequestResponse;
+import data.*;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -50,8 +47,6 @@ public class RequestProcessApiTest extends BaseApiTest {
     @Description("Тест проверяет отклонение заявки по динамическому айди заявки и админа")
     @Test
     public void testProcessApplicationNotSuccessfully(){
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-
         int dynamicId = createFreshApplicationId();
 
         RequestProcessData processBody = RequestProcessData.builder()
@@ -83,7 +78,8 @@ public class RequestProcessApiTest extends BaseApiTest {
                 .build();
 
         given()
-                .auth().basic("user", "WRONG_PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(processBody)
                 .when()
@@ -134,14 +130,7 @@ public class RequestProcessApiTest extends BaseApiTest {
     }
 
     private int createFreshApplicationId() {
-        UserRequestData birthBody = UserRequestData.builder()
-                .mode("birth")
-                .personalFirstName("Петя").personalLastName("Иванов").personalMiddleName("Иванович")
-                .personalPhoneNumber("79991112233").personalNumberOfPassport("AB123456")
-                .citizenLastName("Иванов").citizenFirstName("Иван").citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10").citizenNumberOfPassport("AB123456").citizenGender("Муж")
-                .birth_place("Москва").birth_mother("Anna").birth_father("Egor")
-                .build();
+        UserRequestData birthBody = TestDataFactory.createValidBirthUserData("Петя");
 
         UserRequestResponse createResponse = given()
                 .spec(Specifications.requestSpec())

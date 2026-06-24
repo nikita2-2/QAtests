@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
 
+import static data.TestDataFactory.createDeathData;
 import static io.restassured.RestAssured.given;
 
 
@@ -22,7 +23,6 @@ public class UserRequestDeathTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию смерти и возращается ее номер")
     @Test
     public void testCreateDeathRequestApi() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
         UserRequestData deathBody = createDeathData();
 
         UserRequestResponse responseBody = given()
@@ -42,7 +42,8 @@ public class UserRequestDeathTest extends BaseApiTest {
     public void testCreateDeathRequestWithWrongAuth() {
         UserRequestData birthBody = createDeathData();
         given()
-                .auth().basic("user", "PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(birthBody)
                 .when()
@@ -63,28 +64,5 @@ public class UserRequestDeathTest extends BaseApiTest {
                 .post("/sendUserRequest")
                 .then()
                 .statusCode(400);
-    }
-
-    private UserRequestData createDeathData(){
-        return UserRequestData.builder()
-                .mode("death")
-
-                .personalFirstName("Иванвцовв")
-                .personalLastName("Иванов")
-                .personalMiddleName("Иванович")
-                .personalPhoneNumber("79999856985")
-                .personalNumberOfPassport("ММ466666")
-
-                .citizenLastName("Петрова")
-                .citizenFirstName("Иван")
-                .citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport("AB123456")
-                .citizenGender("М")
-
-                .death_placeOfDeath("Москва улица Ленина")
-                .death_dateOfDeath("2025-10-10")
-
-                .build();
     }
 }

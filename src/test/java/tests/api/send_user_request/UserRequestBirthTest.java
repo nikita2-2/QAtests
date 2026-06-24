@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import tests.api.BaseApiTest;
 import tests.api.Specifications;
 
+import static data.TestDataFactory.createValidBirthUserData;
 import static io.restassured.RestAssured.given;
 
 public class UserRequestBirthTest extends BaseApiTest {
@@ -18,8 +19,7 @@ public class UserRequestBirthTest extends BaseApiTest {
     @Description("Тест проверяет, что при отправке валидных данных создается заявка на регистрацию рождения и возращается ее номер")
     @Test
     public void testCreateBirthRequestApi() {
-        Specifications.installSpecifications(Specifications.requestSpec(), Specifications.responseSpec());
-        UserRequestData birthBody = createBirthData();
+        UserRequestData birthBody = createValidBirthUserData("Ivann");
 
         UserRequestResponse responseBody = given()
                 .body(birthBody)
@@ -36,9 +36,10 @@ public class UserRequestBirthTest extends BaseApiTest {
     @Epic("АПИ ТЕСТЫ")
     @Story("Ошибка авторизации для заявки рождения")
     public void testCreateBirthRequestWithWrongAuth() {
-        UserRequestData birthBody = createBirthData();
+        UserRequestData birthBody = createValidBirthUserData("Ivann");
         given()
-                .auth().basic("user", "PASSWORD")
+                .baseUri(Specifications.apiUrl)
+                .auth().basic(Specifications.apiUser, "WRONG_PASSWORD")
                 .contentType(io.restassured.http.ContentType.JSON)
                 .body(birthBody)
                 .when()
@@ -59,37 +60,5 @@ public class UserRequestBirthTest extends BaseApiTest {
                 .post("/sendUserRequest")
                 .then()
                 .statusCode(400);
-    }
-
-    private UserRequestData createBirthData(){
-        return UserRequestData.builder()
-                .mode("birth")
-
-                .personalFirstName("Петя")
-                .personalLastName("Иванов")
-                .personalMiddleName("Иванович")
-                .personalPhoneNumber("79991112233")
-                .personalNumberOfPassport("AB123456")
-
-                .citizenLastName("Иванов")
-                .citizenFirstName("Иван")
-                .citizenMiddleName("Иванович")
-                .citizenBirthDate("1995-10-10")
-                .citizenNumberOfPassport("AB123456")
-                .citizenGender("Муж")
-
-                .dateOfMarriage("2026-10-10")
-                .newLastName("Иванова")
-                .anotherPersonLastName("Сидорова")
-                .anotherPersonFirstName("Мария")
-                .anotherPersonMiddleName("Алексеевна")
-                .birth_of_anotoherPerson("15051997")
-                .anotherPersonPassport("CD789012")
-
-                .birth_place("Москва, ул Длинная 4")
-                .birth_mother("Anna")
-                .birth_father("Egor")
-
-                .build();
     }
 }

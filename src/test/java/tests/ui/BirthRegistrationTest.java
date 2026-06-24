@@ -8,7 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.*;
+
+import java.net.MalformedURLException;
 
 @Slf4j
 public class BirthRegistrationTest extends BaseTest {
@@ -24,13 +28,6 @@ public class BirthRegistrationTest extends BaseTest {
 
     @BeforeEach
     public void setUp() {
-        mainPage = new MainPage(driver);
-        userRegistrationPage = new UserRegistrationPage(driver);
-        serviceSelectionPage = new ServiceSelectionPage(driver);
-        citizenDataPage = new CitizenDataPage(driver);
-        birthServiceDataPage = new BirthServiceDataPage(driver);
-        applicationStatusPage = new ApplicationStatusPage(driver);
-
         dataUser = UserData.builder()
                 .lastName("Иванов")
                 .firstName("Иван")
@@ -59,12 +56,26 @@ public class BirthRegistrationTest extends BaseTest {
                 .build();
     }
 
-    @Test
+    @ParameterizedTest(name = "Тест в {0}")
+    @org.junit.jupiter.params.provider.MethodSource("tests.ui.BaseTest#provideBrowsers")
     @Epic("Регистрация заявлений ЗАГС")
     @Feature("Регистрация рождения")
     @Story("Успешная подача заявки на рождение ребенка")
     @Description("Тест проверяет пошаговое заполнение 5 окон данных для регистрации рождения")
-    public void testBirthRegistrationE2E() {
+    public void testBirthRegistrationE2E(String browserAndVersion)  throws MalformedURLException {
+        String[] parts = browserAndVersion.split(":");
+        String browser = parts[0];
+        String version = parts[1];
+
+        initDriver(browser, version);
+
+        mainPage = new MainPage(driver);
+        userRegistrationPage = new UserRegistrationPage(driver);
+        serviceSelectionPage = new ServiceSelectionPage(driver);
+        citizenDataPage = new CitizenDataPage(driver);
+        birthServiceDataPage = new BirthServiceDataPage(driver);
+        applicationStatusPage = new ApplicationStatusPage(driver);
+
         mainPage.clickLoginAsUser();
         userRegistrationPage.fillRegistrationData(dataUser);
         userRegistrationPage.buttons.clickNext();

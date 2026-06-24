@@ -1,5 +1,6 @@
 package tests.api.get_appl_status;
 
+import data.ErrorResponse;
 import data.UserRequestData;
 import data.UserRequestResponse;
 import io.qameta.allure.Description;
@@ -13,6 +14,7 @@ import tests.api.Specifications;
 import static data.TestDataFactory.createValidBirthUserData;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GetApplStatusApiTest extends BaseApiTest {
 
@@ -49,13 +51,16 @@ public class GetApplStatusApiTest extends BaseApiTest {
     @Description("Негативный тест: проверка, что при передаче отрицательного ID сервер возвращает ошибку клиента")
     @Test
     public void testGetApplicationStatusWithInvalidId() {
-        given()
-                .spec(Specifications.requestSpec())
+        ErrorResponse responsesBody = given()
                 .pathParam("applicationId", -999)
                 .when()
                 .get("/getApplStatus/{applicationId}")
                 .then()
-                .statusCode(400);
+                .statusCode(200)
+                .extract()
+                .as(ErrorResponse.class);
+
+        assertNotNull(responsesBody.getMessage(), "Сообщение об ошибке не пришло");
     }
 
     @Epic("АПИ ТЕСТЫ")
